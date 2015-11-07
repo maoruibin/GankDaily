@@ -1,0 +1,30 @@
+<resources>
+    <string name="app_name">GankIO</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="action_about">关于</string>
+    <string name="action_github_tending">Github Tending</string>
+    <string name="action_save">保存</string>
+    <string name="title_activity_girl_detail">GirlDetailActivity</string>
+    <string name="title_activity_gank">GankActivity</string>
+    <string name="title_activity_web">WebActivity</string>
+    <string name="action_refresh">刷新</string>
+    <string name="action_copy_url">复制链接</string>
+    <string name="action_open_url">从浏览器打开链接</string>
+    <string name="toast_copy_done">复制成功</string>
+    <string name="toast_open_fail">打开链接失败</string>
+    <string name="empty_data_of_girls">妹子还没有准备好</string>
+    <string name="error_index_load">无法加载数据，请检查网络连接。点击可重试。</string>
+    <string name="no_more_girls">妹子见底了，没有更多啦。</string>
+    <string name="action_to_top">返回顶部</string>
+    <string name="picture_save_fail">图片保存失败，请再次尝试保存！</string>
+    <string name="picture_has_save_to">图片已保存至 %s 文件夹</string>
+
+    <string name="action_github_trending">GitHub trending</string>
+    <string name="url_github_trending">https://github.com/trending</string>
+
+    <string name="title_point">提示</string>
+    <string name="dialog_know">知道了</string>
+    <string name="dialog_confirm">确定</string>
+</resources>

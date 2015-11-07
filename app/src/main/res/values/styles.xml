@@ -1,0 +1,14 @@
+<resources>
+
+    <style name="ViaTextAppearance">
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/md_grey_400</item>
+    </style>
+
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+</resources>
