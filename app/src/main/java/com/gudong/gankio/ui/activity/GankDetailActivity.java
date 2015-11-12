@@ -28,6 +28,9 @@ public class GankDetailActivity extends BaseSwipeRefreshActivity<GankDetailPrese
 
     GankListAdapter mAdapter;
 
+    private boolean mIsFirstTimeTouchBottom = true;
+    private boolean mHasMoreData = true;
+
     Date mDate;
 
     public static void gotoGankActivity(Context context, Date date) {
@@ -89,6 +92,11 @@ public class GankDetailActivity extends BaseSwipeRefreshActivity<GankDetailPrese
     }
 
     @Override
+    public void appendMoreDataToView(List<Gank> data) {
+        mAdapter.update(data);
+    }
+
+    @Override
     public void showEmptyView() {
 
     }
@@ -99,9 +107,26 @@ public class GankDetailActivity extends BaseSwipeRefreshActivity<GankDetailPrese
     }
 
     private void initRecycleView() {
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRvGank.setLayoutManager(layoutManager);
-        mAdapter = new GankListAdapter();
+        mAdapter = new GankListAdapter(this);
         mRvGank.setAdapter(mAdapter);
+
+        mRvGank.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+                boolean isBottom =
+                        layoutManager.findLastCompletelyVisibleItemPosition() >= mAdapter.getItemCount() - 4;
+                if (!mSwipeRefreshLayout.isRefreshing() && isBottom && mHasMoreData) {
+                    if (!mIsFirstTimeTouchBottom) {
+                        showRefresh();
+                        mPresenter.getDataMore();
+                    } else {
+                        mIsFirstTimeTouchBottom = false;
+                    }
+                }
+            }
+        });
     }
 }

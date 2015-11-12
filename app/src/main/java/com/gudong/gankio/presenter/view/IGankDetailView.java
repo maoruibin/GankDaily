@@ -14,4 +14,11 @@ public interface IGankDetailView<T extends Soul>  extends ISwipeRefreshView {
      * @param data
      */
     void fillData(List<T> data);
+
+
+    /**
+     * append data to history list(load more)
+     * @param data
+     */
+    void appendMoreDataToView(List<T> data);
 }

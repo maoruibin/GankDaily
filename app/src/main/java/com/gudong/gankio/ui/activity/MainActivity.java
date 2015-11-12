@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.CheckResult;
 import android.support.design.widget.Snackbar;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -58,7 +58,7 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
     }
 
     private void initRecycleView(){
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        final LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL,false);
         mRcvIndexContent.setLayoutManager(layoutManager);
         mAdapter = new MainListAdapter(this);
         mAdapter.setIClickItem(this);
@@ -69,8 +69,7 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
                 boolean isBottom =
-                        layoutManager.findLastCompletelyVisibleItemPositions(new int[2])[1]
-                                >= mAdapter.getItemCount() - 4;
+                        layoutManager.findLastCompletelyVisibleItemPosition() >= mAdapter.getItemCount() - 4;
                 if (!mSwipeRefreshLayout.isRefreshing() && isBottom && mHasMoreData) {
                     if (!mIsFirstTimeTouchBottom) {
                         showRefresh();
