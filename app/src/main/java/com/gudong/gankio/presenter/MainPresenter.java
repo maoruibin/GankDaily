@@ -20,7 +20,7 @@ import rx.functions.Func2;
  * Created by GuDong on 10/29/15 14:07.
  * Contact with 1252768410@qq.com.
  */
-public class MainPresenter extends BasePresenter<IMainView>{
+public class  MainPresenter extends BasePresenter<IMainView>{
     
     private int mCurrentPage = 1;
 

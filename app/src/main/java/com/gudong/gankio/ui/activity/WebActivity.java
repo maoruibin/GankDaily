@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.webkit.WebView;
 import android.widget.Toast;
@@ -124,4 +125,15 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
     public void showLoadErrorMessage(String message) {
         Snackbar.make(mWbContent,message,Snackbar.LENGTH_SHORT).show();
     }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if ((keyCode == KeyEvent.KEYCODE_BACK) && mWbContent.canGoBack()) {
+            // Check if the key event was the Back button and if there's history
+            mWbContent.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
 }

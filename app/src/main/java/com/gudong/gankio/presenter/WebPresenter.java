@@ -2,6 +2,8 @@ package com.gudong.gankio.presenter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
+import android.text.TextUtils;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -34,7 +36,13 @@ public class WebPresenter extends BasePresenter<IWebView> {
     private class LoveClient extends WebViewClient {
 
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (url != null) view.loadUrl(url);
+            if (TextUtils.isEmpty(url)){
+                return true;
+            }
+            if(Uri.parse(url).getHost().equals("github.com")){
+                return false;
+            }
+            view.loadUrl(url);
             return true;
         }
 
