@@ -1,36 +1,106 @@
 apply plugin: 'com.android.application'
 
+def releaseTime() {
+    return new Date().format("yyyy-MM-dd", TimeZone.getTimeZone("UTC"))
+}
+
 android {
-
     compileSdkVersion 23
-
-    buildToolsVersion "23.0.1"
-
+    buildToolsVersion "23.0.2"
     defaultConfig {
         applicationId "com.gudong.gankio"
         minSdkVersion 14
         targetSdkVersion 23
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.0"
+    }
+
+    signingConfigs {
+        //指定名叫release的一个签名对象 会在下面的脚本(73行开始)中，动态根据配置文件实例化
+        release
     }
 
     buildTypes {
         release {
-            minifyEnabled false
+            //设置是否混淆
+            minifyEnabled true
+            //设置压缩对齐
+            zipAlignEnabled true
+            //移除无用的资源文件
+            shrinkResources true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            //如果签名配置不为空 则设置签名信息
+            if (signingConfigs.release != null) {
+                signingConfig signingConfigs.release
+            }
+            //指定签名包得输入文件名称
+            applicationVariants.all { variant ->
+                variant.outputs.each { output ->
+                    def outputFile = output.outputFile
+                    if (outputFile != null && outputFile.name.endsWith('.apk')) {
+                        // 输出apk名称为GankDaily_v1.0_2015-01-15_wandoujia.apk
+                        def fileName = "GankDaily_v${defaultConfig.versionName}_${releaseTime()}_${variant.productFlavors[0].name}.apk"
+                        output.outputFile = new File(outputFile.parent, fileName)
+                    }
+                }
+            }
         }
+
         debug{
 
         }
     }
+
+    productFlavors {
+        beta{
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE:"beta"]
+        }
+        xiaomi {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE:"xiaomi"]
+        }
+        m360 {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE:"m360"]
+        }
+        wandoujia {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
+        }
+        fir {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "fir"]
+        }
+        umeng {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE: "umeng"]
+        }
+    }
 }
+
+//set release sign info synchronously
+def Properties props = new Properties()
+def propFile = file('../gradle.properties')
+if (propFile.canRead()) {
+    props.load(new FileInputStream(propFile))
+    if (props != null &&
+            props.containsKey('SIGN_FILE') && props.containsKey('SIGN_KEYSTORE_PASS') &&
+            props.containsKey('SIGN_KEYSTORE_ALIAS') && props.containsKey('SIGN_KEYSTORE_ALIAS_PASS')) {
+        println 'release build signing'
+        android.signingConfigs.release.storeFile = file(props['SIGN_FILE'])
+        android.signingConfigs.release.storePassword = props['SIGN_KEYSTORE_PASS']
+        android.signingConfigs.release.keyAlias = props['SIGN_KEYSTORE_ALIAS']
+        android.signingConfigs.release.keyPassword = props['SIGN_KEYSTORE_ALIAS_PASS']
+    } else {
+        println 'release build not found signing properties'
+        android.buildTypes.release.signingConfig = null
+    }
+} else {
+    println 'release build not found signing file'
+    android.buildTypes.release.signingConfig = null
+}
+
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile 'com.android.support:recyclerview-v7:23.1.0'
-    compile 'com.android.support:design:23.1.0'
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
 
     compile 'com.jakewharton:butterknife:7.0.1'
 
@@ -44,4 +114,5 @@ dependencies {
 
     compile 'com.commit451:PhotoView:1.2.4'
 
+    compile 'com.umeng.analytics:analytics:latest.integration'
 }

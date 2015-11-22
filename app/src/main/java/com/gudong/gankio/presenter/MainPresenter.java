@@ -1,178 +1,182 @@
 package com.gudong.gankio.presenter;
 
-import android.content.Context;
+import android.app.Activity;
 
-import com.gudong.gankio.data.PrettyGirlData;
-import com.gudong.gankio.data.entity.Girl;
-import com.gudong.gankio.data.休息视频Data;
+import com.gudong.gankio.data.GankData;
+import com.gudong.gankio.data.entity.Gank;
 import com.gudong.gankio.presenter.view.IMainView;
+import com.gudong.gankio.util.AndroidUtils;
+import com.umeng.update.UmengUpdateAgent;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
-import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
-import rx.functions.Func2;
 
 /**
- * 首页视图控制器
- * Created by GuDong on 10/29/15 14:07.
+ * the Presenter of MainActivity
+ * Created by GuDong on 11/2/15 14:38.
  * Contact with 1252768410@qq.com.
  */
-public class  MainPresenter extends BasePresenter<IMainView>{
-    
-    private int mCurrentPage = 1;
+public class MainPresenter extends BasePresenter<IMainView> {
 
-    /**
-     * the count of the size of one request
-     */
-    private static final int PAGE_SIZE = 10;
-
-    public MainPresenter(Context context, IMainView view) {
+    private static final int DAY_OF_MILLISECOND = 24*60*60*1000;
+    private Date mCurrentDate;
+    List<Gank> mGankList = new ArrayList<>();
+    private int mCountOfGetMoreDataEmpty = 0;
+    public MainPresenter(Activity context, IMainView view) {
         super(context, view);
     }
 
-    public void resetCurrentPage(){
-        mCurrentPage = 1;
+    /**
+     *  if execute getDataMore method more than once ,this flag will be true else false
+     */
+    private boolean hasLoadMoreData = false;
+
+    public void checkAutoUpdateByUmeng() {
+        if(mContext.getIntent().getSerializableExtra("BUNDLE_GANK") == null){
+            //check update even in 2g/3g/4g condition
+            UmengUpdateAgent.setUpdateOnlyWifi(false);
+            UmengUpdateAgent.update(mContext);
+        }
+    }
+
+    //check version info ,if the version info has changed,we need pop a dialog to show change log info
+    public void checkVersionInfo() {
+        String currentVersion = AndroidUtils.getAppVersion(mContext);
+        String localVersionName = AndroidUtils.getLocalVersion(mContext);
+        if (!localVersionName.equals(currentVersion)) {
+            mView.showChangeLogInfo("changelog.html");
+            AndroidUtils.setCurrentVersion(mContext, currentVersion);
+        }
     }
 
     /**
-     * 只有加载的页数是第一页的时候 才应该在下拉刷新时，去执行数据请求，如果加载的页数超过两页，
-     * 则不去执行重新加载的数据请求，此时的刷新为假刷新，不去请求数据。这是一种良好的用户体验。愚以为~
      * @return
      */
-    public boolean shouldRefillGirls(){
-        return mCurrentPage <= 2;
+    public boolean shouldRefillData(){
+        return !hasLoadMoreData;
     }
 
-    /**
-     * re load girls data it will clear history girls  so bad !
-     */
-    public void refillGirls(){
-        Observable.zip(
-                mGuDong.getPrettyGirlData(PAGE_SIZE, mCurrentPage),
-                mGuDong.get休息视频Data(PAGE_SIZE, mCurrentPage),
-                new Func2<PrettyGirlData, 休息视频Data, PrettyGirlData>() {
-                    @Override
-                    public PrettyGirlData call(PrettyGirlData prettyGirlData, 休息视频Data 休息视频Data) {
-                        return createGirlInfoWith休息视频(prettyGirlData,休息视频Data);
-                    }
-                })
-                .map(new Func1<PrettyGirlData, List<Girl>>() {
-                    @Override
-                    public List<Girl> call(PrettyGirlData prettyGirlData) {
-                        return prettyGirlData.results;
-                    }
-                })
-                .flatMap(new Func1<List<Girl>, Observable<Girl>>() {
-                    @Override
-                    public Observable<Girl> call(List<Girl> girls) {
-                        return Observable.from(girls);
-                    }
-                })
-                .toSortedList(new Func2<Girl, Girl, Integer>() {
-                    @Override
-                    public Integer call(Girl girl, Girl girl2) {
-                        return girl2.publishedAt.compareTo(girl.publishedAt);
-                    }
-                })
+    public void getData(final Date date) {
+        mCurrentDate = date;
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        mGuDong.getGankData(year, month, day)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Girl>>() {
+                .map(new Func1<GankData, GankData.Result>() {
+                    @Override
+                    public GankData.Result call(GankData gankData) {
+                        return gankData.results;
+                    }
+                })
+                .map(new Func1<GankData.Result, List<Gank>>() {
+                    @Override
+                    public List<Gank> call(GankData.Result result) {
+                        return addAllResults(result);
+                    }
+                })
+                .subscribe(new Subscriber<List<Gank>>() {
                     @Override
                     public void onCompleted() {
-
+                        // after get data complete, need put off time one day
+                        mCurrentDate = new Date(date.getTime()-DAY_OF_MILLISECOND);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showErrorView(e);
-                        mView.getDataFinish();
                     }
 
                     @Override
-                    public void onNext(List<Girl> girls) {
-                        if (girls.isEmpty()) {
-                            mView.showEmptyView();
-                        } else if (girls.size() < PAGE_SIZE) {
-                            mView.fillData(girls);
-                            mView.hasNoMoreData();
-                        } else if (girls.size() == PAGE_SIZE) {
-                            mView.fillData(girls);
-                            mCurrentPage++;
+                    public void onNext(List<Gank> list) {
+                        // some day the data will be return empty like sunday, so we need get after day data
+                        if (list.isEmpty()) {
+                            getData(new Date(date.getTime()-DAY_OF_MILLISECOND));
+                        } else {
+                            mCountOfGetMoreDataEmpty = 0;
+                            mView.fillData(list);
                         }
                         mView.getDataFinish();
                     }
                 });
     }
 
-    public void getDataMore(){
-        Observable.zip(
-                mGuDong.getPrettyGirlData(PAGE_SIZE,mCurrentPage),
-                mGuDong.get休息视频Data(PAGE_SIZE,mCurrentPage),
-                new Func2<PrettyGirlData, 休息视频Data, PrettyGirlData>() {
-                    @Override
-                    public PrettyGirlData call(PrettyGirlData prettyGirlData, 休息视频Data 休息视频Data) {
-                        return createGirlInfoWith休息视频(prettyGirlData,休息视频Data);
-                    }
-                })
-                .map(new Func1<PrettyGirlData, List<Girl>>() {
-                    @Override
-                    public List<Girl> call(PrettyGirlData prettyGirlData) {
-                        return prettyGirlData.results;
-                    }
-                })
-                .flatMap(new Func1<List<Girl>, Observable<Girl>>() {
-                    @Override
-                    public Observable<Girl> call(List<Girl> girls) {
-                        return Observable.from(girls);
-                    }
-                })
-                .toSortedList(new Func2<Girl, Girl, Integer>() {
-                    @Override
-                    public Integer call(Girl girl, Girl girl2) {
-                        return girl2.publishedAt.compareTo(girl.publishedAt);
-                    }
-                })
+    public void getDataMore() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(mCurrentDate);
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH)+1;
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        mGuDong.getGankData(year, month, day)
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<List<Girl>>() {
+                .map(new Func1<GankData, GankData.Result>() {
+                    @Override
+                    public GankData.Result call(GankData gankData) {
+                        return gankData.results;
+                    }
+                })
+                .map(new Func1<GankData.Result, List<Gank>>() {
+                    @Override
+                    public List<Gank> call(GankData.Result result) {
+                        return addAllResults(result);
+                    }
+                })
+                .subscribe(new Subscriber<List<Gank>>() {
                     @Override
                     public void onCompleted() {
-
+                        // after get data complete, need put off time one day
+                        mCurrentDate = new Date(mCurrentDate.getTime()-DAY_OF_MILLISECOND);
+                        // now user has execute getMoreData so this flag will be set true
+                        //and now when user pull down list we would not refill data
+                        hasLoadMoreData = true;
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        mView.showErrorView(e);
-                        mView.getDataFinish();
+
                     }
 
                     @Override
-                    public void onNext(List<Girl> girls) {
-                        if (girls.isEmpty()) {
-                            mView.hasNoMoreData();
-                        } else if (girls.size() < PAGE_SIZE) {
-                            mView.appendMoreDataToView(girls);
-                            mView.hasNoMoreData();
-                        } else if (girls.size() == PAGE_SIZE) {
-                            mView.appendMoreDataToView(girls);
-                            mCurrentPage++;
+                    public void onNext(List<Gank> list) {
+                        //when this day is weekend , the list will return empty(weekend has not gank info,the editors need rest)
+                        if (list.isEmpty()) {
+                            //record count of empty day
+                            mCountOfGetMoreDataEmpty += 1;
+                            //if empty day is more than five,it indicate has no more data to show
+                            if(mCountOfGetMoreDataEmpty>=5){
+                                mView.hasNoMoreData();
+                            }else{
+                                // we need look forward data
+                                getDataMore();
+                            }
+                        } else {
+                            mCountOfGetMoreDataEmpty = 0;
+                            mView.appendMoreDataToView(list);
                         }
                         mView.getDataFinish();
                     }
                 });
     }
 
-    private PrettyGirlData createGirlInfoWith休息视频(PrettyGirlData girlData,休息视频Data data){
-        int restSize = data.results.size();
-        for (int i = 0; i < girlData.results.size(); i++) {
-            if(i<=restSize-1){
-                Girl girl = girlData.results.get(i);
-                girl.desc+=" "+data.results.get(i).desc;
-            }else{
-                break;
-            }
-        }
-        return girlData;
+    private List<Gank> addAllResults(GankData.Result results) {
+        mGankList.clear();
+        if (results.androidList != null) mGankList.addAll(results.androidList);
+        if (results.iOSList != null) mGankList.addAll(results.iOSList);
+        if (results.appList != null) mGankList.addAll(results.appList);
+        if (results.拓展资源List != null) mGankList.addAll(results.拓展资源List);
+        if (results.瞎推荐List != null) mGankList.addAll(results.瞎推荐List);
+        if (results.休息视频List != null) mGankList.addAll(results.休息视频List);
+        // make meizi data is in first position
+        if (results.妹纸List != null) mGankList.addAll(0, results.妹纸List);
+        return mGankList;
     }
+
+
 }

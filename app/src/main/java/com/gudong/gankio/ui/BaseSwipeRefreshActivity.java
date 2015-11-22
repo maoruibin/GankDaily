@@ -43,7 +43,7 @@ public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends 
 
     /**
      * check data status
-     * @return return true will refresh data else refresh on the surface
+     * @return return true indicate it should load data really else indicate don't refresh
      */
     protected boolean prepareRefresh(){
         return true;
@@ -60,7 +60,9 @@ public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends 
         mSwipeRefreshLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                mSwipeRefreshLayout.setRefreshing(false);
+                if(mSwipeRefreshLayout != null){
+                    mSwipeRefreshLayout.setRefreshing(false);
+                }
             }
         },1000);
     }

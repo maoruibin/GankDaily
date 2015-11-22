@@ -1,5 +1,6 @@
 package com.gudong.gankio.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -8,7 +9,6 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
-import android.widget.ImageView;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.view.IGirlFaceView;
@@ -26,14 +26,8 @@ import java.io.IOException;
  * Contact with 1252768410@qq.com.
  */
 public class GirlFacePresenter extends BasePresenter<IGirlFaceView> {
-    public GirlFacePresenter(Context context, IGirlFaceView view) {
+    public GirlFacePresenter(Activity context, IGirlFaceView view) {
         super(context, view);
-    }
-
-    public void loadGirl(String url, ImageView iv) {
-        if (!TextUtils.isEmpty(url)) {
-            Picasso.with(mContext).load(url).into(iv);
-        }
     }
 
     public void saveFace(String url) {

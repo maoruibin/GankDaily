@@ -1,6 +1,6 @@
 package com.gudong.gankio.presenter;
 
-import android.content.Context;
+import android.app.Activity;
 
 import com.gudong.gankio.core.GuDong;
 import com.gudong.gankio.core.MainFactory;
@@ -16,11 +16,11 @@ public class BasePresenter<GV extends IBaseView> {
     /**
      * TODO 这里用是否用Activity待考证
      */
-    protected Context mContext;
+    protected Activity mContext;
 
     public static final GuDong mGuDong = MainFactory.getGuDongInstance();
 
-    public BasePresenter(Context context, GV view) {
+    public BasePresenter(Activity context, GV view) {
         mContext = context;
         mView = view;
     }

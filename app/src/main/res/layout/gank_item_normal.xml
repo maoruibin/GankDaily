@@ -1,0 +1,42 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:id="@+id/ll_gank_parent"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:gravity="top|left"
+              android:orientation="horizontal"
+              tools:background="@color/md_grey_300"
+              android:background="?attr/selectableItemBackground">
+
+    <TextView
+        android:id="@+id/tv_category"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/padding_gank_item"
+        android:textColor="@color/md_white_1000"
+        android:textSize="@dimen/text_size_gank_category"
+        android:textStyle="bold"
+        android:background="@color/md_red_100"
+        android:gravity="left"
+        android:visibility="gone"
+        android:layout_alignParentLeft="true"
+        tools:visibility="visible"
+        tools:background="@color/md_amber_100"
+        tools:text="Category"/>
+
+    <TextView
+        android:id="@+id/tv_gank_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@id/tv_category"
+        android:layout_alignTop="@+id/tv_category"
+        android:paddingTop="@dimen/padding_gank_item"
+        android:paddingBottom="@dimen/padding_gank_item"
+        android:paddingRight="@dimen/padding_gank_item"
+        android:paddingLeft="@dimen/padding_gank_item"
+        android:textSize="@dimen/text_size_gank_title"
+        android:textColor="@color/md_grey_900"
+        tools:background="@color/md_red_a700"
+        tools:text="叔叔、叔叔，西湖怎么走？"/>
+
+</RelativeLayout>

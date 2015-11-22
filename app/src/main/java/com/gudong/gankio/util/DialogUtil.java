@@ -31,7 +31,7 @@ public class DialogUtil {
      * @param context
      * @param fragmentManager
      * @param dialogTitle title
-     * @param htmlFileName file name like about.html
+     * @param htmlFileName file name
      * @param tag
      */
     public static void showCustomDialog(Context context, FragmentManager fragmentManager, String dialogTitle, String htmlFileName, String tag) {
