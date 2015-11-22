@@ -8,6 +8,7 @@ import android.view.MenuItem;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.BasePresenter;
+import com.umeng.analytics.MobclickAgent;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,20 +20,24 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     @Bind(R.id.toolbar)
     protected Toolbar mToolbar;
-
+    /**
+     * the presenter of this Activity
+     */
     protected P mPresenter;
 
     /**
-     * 设置Activity布局文件
-     * @return 布局文件对应的资源id
+     * set layout of this activity
+     * @return the id of layout
      */
     protected abstract int getLayout();
 
     /**
-     * menu res
-     * @return the id of menu
+     * set the id of menu
+     * @return if values is less then zero ,and the activity will not show menu
      */
-    protected abstract int getMenuRes();
+    protected int getMenuRes(){
+        return -1;
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +49,18 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         initToolBar();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        MobclickAgent.onResume(this);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        MobclickAgent.onPause(this);
+    }
+
     /**
      * TODO use Dagger2 instance Presenter
      */
@@ -51,12 +68,13 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     private void checkPresenterIsNull(){
         if(mPresenter == null){
-            throw new IllegalStateException("please init mPresenter in initPresenter method ");
+            throw new IllegalStateException("please init mPresenter in initPresenter() method ");
         }
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+        if(getMenuRes()<0)return true;
         getMenuInflater().inflate(getMenuRes(), menu);
         return true;
     }
@@ -65,7 +83,8 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case android.R.id.home:
-                finish();
+                //don't use finish() and use onBackPressed() will be a good practice , trust me !
+                onBackPressed();
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -73,7 +92,7 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
 
     final private void initToolBar() {
         if(mToolbar == null){
-            throw new NullPointerException("请在布局文件中加入Toolbar");
+            throw new NullPointerException("please add a Toolbar in your layout.");
         }
         setSupportActionBar(mToolbar);
     }

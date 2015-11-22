@@ -1,6 +1,5 @@
 package com.gudong.gankio.ui.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -14,6 +13,7 @@ import android.widget.Toast;
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.WebPresenter;
 import com.gudong.gankio.presenter.view.IWebView;
+import com.gudong.gankio.ui.BaseActivity;
 import com.gudong.gankio.ui.BaseSwipeRefreshActivity;
 import com.gudong.gankio.util.AndroidUtils;
 
@@ -21,28 +21,17 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implements IWebView{
-
     private static final String EXTRA_URL = "URL";
     private static final String EXTRA_TITLE = "TITLE";
-
-    public static void gotoWebActivity(Context context,String url,String title){
-        Intent intent = new Intent(context,WebActivity.class);
-        intent.putExtra(EXTRA_URL,url);
-        intent.putExtra(EXTRA_TITLE,title);
-        context.startActivity(intent);
-    }
 
     @Bind(R.id.wb_content)
     WebView mWbContent;
 
-    @Override
-    protected int getLayout() {
-        return R.layout.activity_web;
-    }
-
-    @Override
-    protected int getMenuRes() {
-        return R.menu.menu_web;
+    public static void gotoWebActivity(BaseActivity context,String url,String title){
+        Intent intent = new Intent(context,WebActivity.class);
+        intent.putExtra(EXTRA_URL,url);
+        intent.putExtra(EXTRA_TITLE, title);
+        context.startActivity(intent);
     }
 
     @Override
@@ -60,6 +49,16 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
     }
 
     @Override
+    protected int getLayout() {
+        return R.layout.activity_web;
+    }
+
+    @Override
+    protected int getMenuRes() {
+        return R.menu.menu_web;
+    }
+
+    @Override
     protected void onRefreshStarted() {
         refresh();
     }
@@ -73,11 +72,9 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
         mWbContent.reload();
     }
 
-
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
         switch (id) {
             case R.id.action_copy_url:
                 String copyDone = getString(R.string.toast_copy_done);
@@ -129,7 +126,6 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if ((keyCode == KeyEvent.KEYCODE_BACK) && mWbContent.canGoBack()) {
-            // Check if the key event was the Back button and if there's history
             mWbContent.goBack();
             return true;
         }

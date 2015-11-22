@@ -5,11 +5,10 @@ import com.gudong.gankio.data.entity.Soul;
 import java.util.List;
 
 /**
- * index view
- * Created by GuDong on 10/29/15 14:10.
+ * Created by GuDong on 11/2/15 14:39.
  * Contact with 1252768410@qq.com.
  */
-public interface IMainView<T extends Soul> extends ISwipeRefreshView{
+public interface IMainView<T extends Soul>  extends ISwipeRefreshView {
     /**
      * load data successfully
      * @param data
@@ -23,8 +22,14 @@ public interface IMainView<T extends Soul> extends ISwipeRefreshView{
     void appendMoreDataToView(List<T> data);
 
     /**
-     * no more data
+     * no more data for show and this condition is hard to appear,it need you scroll main view long time
+     * I think it has no body do it like this ,even though，I deal this condition also, In case someone does it.
      */
     void hasNoMoreData();
 
+    /**
+     * show change log info in a dialog
+     * @param assetFileName the name of local html file like "changelog.html"
+     */
+    void showChangeLogInfo(String assetFileName);
 }

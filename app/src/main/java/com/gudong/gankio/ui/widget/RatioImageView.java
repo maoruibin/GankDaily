@@ -12,16 +12,24 @@ public class RatioImageView extends ImageView {
     private int originalWidth;
     private int originalHeight;
 
+
+    private int measureWidth;
+    private int measureHeight;
+
     public RatioImageView(Context context) {
-        super(context);
+        this(context, null);
     }
 
     public RatioImageView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+        this(context, attrs, 0);
     }
 
     public RatioImageView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
+        initView();
+    }
+
+    private void initView() {
     }
 
     public void setOriginalSize(int originalWidth, int originalHeight) {
@@ -29,22 +37,21 @@ public class RatioImageView extends ImageView {
         this.originalHeight = originalHeight;
     }
 
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         if(originalHeight>0 && originalWidth>0){
             float radio = (float)originalWidth/(float)originalHeight;
 
-            int width = MeasureSpec.getSize(widthMeasureSpec);
-            int height = MeasureSpec.getSize(heightMeasureSpec);
+            measureWidth = MeasureSpec.getSize(widthMeasureSpec);
+            measureHeight = MeasureSpec.getSize(heightMeasureSpec);
 
-            if(width>0){
-                height = (int) ((float)width/radio);
+            if(measureWidth>0){
+                measureHeight = (int) ((float)measureWidth/radio);
             }
-
-            setMeasuredDimension(width,height);
+            setMeasuredDimension(measureWidth,measureHeight);
         }else{
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
-
     }
 }

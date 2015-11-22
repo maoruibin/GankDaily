@@ -1,24 +1,29 @@
 package com.gudong.gankio.ui.adapter;
 
 import android.content.Context;
+import android.graphics.ColorFilter;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.support.v7.widget.RecyclerView;
-import android.text.SpannableStringBuilder;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gudong.gankio.R;
-import com.gudong.gankio.core.GankType;
+import com.gudong.gankio.core.GankCategory;
 import com.gudong.gankio.data.entity.Gank;
-import com.gudong.gankio.ui.activity.WebActivity;
+import com.gudong.gankio.ui.BaseActivity;
 import com.gudong.gankio.ui.widget.RatioImageView;
 import com.gudong.gankio.util.DateUtil;
 import com.gudong.gankio.util.StringStyleUtils;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -28,166 +33,230 @@ import butterknife.ButterKnife;
  * Created by GuDong on 10/9/15 22:53.
  * Contact with 1252768410@qq.com.
  */
-public class GankListAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
-
+public class GankListAdapter extends RecyclerView.Adapter<GankListAdapter.ViewHolderItem> {
     private List<Gank> mGankList;
-    private Context mContext;
-    public GankListAdapter(Context context) {
+    private BaseActivity mContext;
+
+    private static IClickMainItem mIClickItem;
+    //blur meizi
+    private static ColorFilter mColorFilter;
+
+    public GankListAdapter(BaseActivity context) {
         mContext = context;
         mGankList = new ArrayList<>();
-    }
+        mGankList.add(getDefGankGirl());
 
+        float[]array = new float[]{
+                1,0,0,0,-70,
+                0,1,0,0,-70,
+                0,0,1,0,-70,
+                0,0,0,1,0,
+        };
+        mColorFilter = new ColorMatrixColorFilter(new ColorMatrix(array));
+    }
     /**
      * before add data , it will remove history data
-     *
      * @param data
      */
     public void updateWithClear(List<Gank> data) {
         mGankList.clear();
-        mGankList.addAll(data);
-        notifyDataSetChanged();
+        update(data);
     }
-
 
     /**
-     *  add data append to history data
+     * add data append to history data*
      * @param data new data
      */
-    public void update(List<Gank> data){
-        mGankList.addAll(data);
+    public void update(List<Gank> data) {
+        formatGankData(data);
         notifyDataSetChanged();
     }
 
-
-    @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        //目前只是用两种类型 ==0 是妹子福利图片类型
-        if(viewType == GankType.福利.ordinal()){
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gank_item_head, null);
-            return new ViewHolderHeader福利(view);
-        }else{
-            View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.gank_item, null);
-            return new ViewHolderNormalItem(view);
-        }
-    }
-
-    @Override
-    public void onBindViewHolder(final RecyclerView.ViewHolder holder, int position) {
-        if(holder instanceof ViewHolderHeader福利){
-            final ViewHolderHeader福利 viewHolderHeader福利 = (ViewHolderHeader福利) holder;
-            final Gank mGank = mGankList.get(position);
-
-            Picasso.with(mContext).load(mGank.url).into(viewHolderHeader福利.mImageView);
-            viewHolderHeader福利.mTvTime.setText(DateUtil.toDate(mGank.publishedAt));
-
-        }else if(holder instanceof ViewHolderNormalItem){
-            final ViewHolderNormalItem viewHolderNormalItem = (ViewHolderNormalItem) holder;
-            final Gank mGank = mGankList.get(position);
-
-            if (position == 0) {
-//                showCategory(viewHolderNormalItem);
-            } else {
-                // 上一个与这一个的目录是否一样
-                boolean doesLastAndThis =
-                        mGankList.get(position - 1).type.equals(mGankList.get(position).type);
-                if (!doesLastAndThis) {
-                    showCategory(viewHolderNormalItem);
-                } else if (viewHolderNormalItem.mTvCategory.isShown())
-                    viewHolderNormalItem.mTvCategory.setVisibility(View.GONE);
-            }
-            viewHolderNormalItem.mTvCategory.setText(mGank.type);
-            if (viewHolderNormalItem.mTvTitle.getTag() == null) {
-                SpannableStringBuilder builder = new SpannableStringBuilder(mGank.desc).append(
-                        StringStyleUtils.format(viewHolderNormalItem.mTvTitle.getContext(), " (via. " + mGank.who + ")",
-                                R.style.ViaTextAppearance));
-                CharSequence mTvTitleText = builder.subSequence(0, builder.length());
-                viewHolderNormalItem.mTvTitle.setTag(mTvTitleText);
-            }
-            CharSequence text = (CharSequence) viewHolderNormalItem.mTvTitle.getTag();
-            viewHolderNormalItem.mTvTitle.setText(text);
-
-            viewHolderNormalItem.mLlGankParent.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    WebActivity.gotoWebActivity(viewHolderNormalItem.mLlGankParent.getContext(), mGank.url, mGank.desc);
-                }
-            });
-
-        }
-
-    }
-
-    private void showCategory(ViewHolderNormalItem holder) {
-        if (!holder.mTvCategory.isShown()) holder.mTvCategory.setVisibility(View.VISIBLE);
+    /**
+     * the type of RecycleView item
+     */
+    private enum EItemType{
+        ITEM_TYPE_GIRL,
+        ITEM_TYPE_NORMAL,
+        ITEM_TYPE_CATEGOTY;
     }
 
     @Override
     public int getItemViewType(int position) {
-        String type = mGankList.get(position).type;
-        int itemType = 0;
-        switch (type) {
-            case "福利":
-                itemType = GankType.福利.ordinal();
-                break;
-            case "iOS":
-                itemType = GankType.iOS.ordinal();
-                break;
-            case "Android":
-                itemType = GankType.Android.ordinal();
-                break;
-            case "App":
-                itemType = GankType.App.ordinal();
-                break;
-            case "拓展资源":
-                itemType = GankType.拓展资源.ordinal();
-                break;
-            case "瞎推荐":
-                itemType = GankType.瞎推荐.ordinal();
-                break;
-            case "休息视频":
-                itemType = GankType.休息视频.ordinal();
-                break;
+        Gank gank = mGankList.get(position);
+        if(gank.is妹子()){
+            return EItemType.ITEM_TYPE_GIRL.ordinal();
+        }else if(gank.isHeader){
+            return EItemType.ITEM_TYPE_CATEGOTY.ordinal();
+        }else{
+            return EItemType.ITEM_TYPE_NORMAL.ordinal();
         }
-        return itemType;
     }
+
+    @Override
+    public GankListAdapter.ViewHolderItem onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view;
+        if (viewType == EItemType.ITEM_TYPE_GIRL.ordinal()) {
+            view = LayoutInflater.from(mContext).inflate(R.layout.gank_item_girl, null);
+            return new ViewHolderItemGirl(view);
+        }else if(viewType == EItemType.ITEM_TYPE_CATEGOTY.ordinal()){
+            view = LayoutInflater.from(mContext).inflate(R.layout.gank_item_category, null);
+            return new ViewHolderItemCategory(view);
+        } else {
+            view = LayoutInflater.from(mContext).inflate(R.layout.gank_item_normal, null);
+            return new ViewHolderItemNormal(view);
+        }
+    }
+
+    @Override
+    public void onBindViewHolder(final GankListAdapter.ViewHolderItem holder, int position) {
+        holder.bindItem(mContext, mGankList.get(position));
+    }
+
     @Override
     public int getItemCount() {
         return mGankList.size();
     }
 
     /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'mTvTitle_item.xml'
-     * for easy to all layout elements.
-     *
-     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+     * ViewHolderItem is a parent class for different item
      */
-    static class ViewHolderNormalItem extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_category)
-        TextView mTvCategory;
-        @Bind(R.id.tv_title)
+    abstract static class ViewHolderItem extends RecyclerView.ViewHolder {
+        public ViewHolderItem(View itemView) {
+            super(itemView);
+        }
+        abstract void bindItem(Context context,Gank gank);
+    }
+
+    static class ViewHolderItemNormal extends ViewHolderItem {
+        @Bind(R.id.tv_gank_title)
         TextView mTvTitle;
         @Bind(R.id.ll_gank_parent)
-        LinearLayout mLlGankParent;
+        RelativeLayout mRlGankParent;
 
-        ViewHolderNormalItem(View itemView) {
+        ViewHolderItemNormal(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+
+        public void bindItem(final Context context,final Gank gank){
+            mTvTitle.setText(StringStyleUtils.getGankInfoSequence(context, gank));
+            mRlGankParent.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    mIClickItem.onClickGankItemNormal(gank, view);
+                }
+            });
+        }
     }
 
-    /**
-     * 头部图片holder
-     */
-    static class ViewHolderHeader福利 extends RecyclerView.ViewHolder {
-        @Bind(R.id.tv_time)
+   static class ViewHolderItemCategory extends ViewHolderItem {
+        @Bind(R.id.tv_category)
+        TextView mTvCategory;
+
+       ViewHolderItemCategory(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+        }
+
+       @Override
+       void bindItem(Context context,Gank gank) {
+           mTvCategory.setText(gank.type);
+       }
+   }
+
+    static class ViewHolderItemGirl extends ViewHolderItem {
+        @Bind(R.id.tv_video_name)
         TextView mTvTime;
         @Bind(R.id.iv_index_photo)
         RatioImageView mImageView;
 
-        ViewHolderHeader福利(View itemView) {
+        ViewHolderItemGirl(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             mImageView.setOriginalSize(200, 100);
         }
+
+        @Override
+        void bindItem(Context context,final Gank gank) {
+            mTvTime.setText(DateUtil.toDate(gank.publishedAt));
+            Picasso.with(context)
+                    .load(gank.url)
+                    .into(mImageView, new Callback() {
+                        @Override
+                        public void onSuccess() {
+                            mImageView.setColorFilter(mColorFilter);
+                        }
+                        @Override
+                        public void onError() {
+
+                        }
+                    });
+
+            mTvTime.setText(DateUtil.toDate(gank.publishedAt));
+            mImageView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mIClickItem.onClickGankItemGirl(gank, mImageView, mTvTime);
+                }
+            });
+        }
     }
+
+    public void setIClickItem(IClickMainItem IClickItem) {
+        mIClickItem = IClickItem;
+    }
+
+    public interface IClickMainItem{
+        /**
+         * click gank girl info item
+         * @param gank
+         * @param viewImage
+         * @param viewText
+         */
+        void onClickGankItemGirl(Gank gank,View viewImage,View viewText);
+
+        /**
+         * click gank normal info item
+         * @param gank
+         * @param view
+         */
+        void onClickGankItemNormal(Gank gank,View view);
+    }
+
+    /**
+     * filter list and add category entity into list
+     * @param data source data
+     */
+    private void formatGankData(List<Gank> data) {
+        //Insert headers into list of items.
+        String lastHeader = "";
+        for (int i = 0; i < data.size(); i++) {
+            Gank gank = data.get(i);
+            String header = gank.type;
+            if (!gank.is妹子() && !TextUtils.equals(lastHeader, header)) {
+                // Insert new header view.
+                Gank gankHeader = gank.clone();
+                lastHeader = header;
+                gankHeader.isHeader = true;
+                mGankList.add(gankHeader);
+            }
+            gank.isHeader = false;
+            mGankList.add(gank);
+        }
+    }
+
+    /**
+     * get a init Gank entity
+     * @return gank entity
+     */
+    private Gank getDefGankGirl(){
+        Gank gank = new Gank();
+        gank.publishedAt = new Date(System.currentTimeMillis());
+        gank.url = "empty";
+        gank.type = GankCategory.福利.name();
+        return gank;
+    }
+
 }
+

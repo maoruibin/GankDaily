@@ -1,6 +1,8 @@
 package com.gudong.gankio.ui.adapter;
 
 import android.content.Context;
+import android.graphics.ColorMatrix;
+import android.graphics.ColorMatrixColorFilter;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,8 @@ import android.widget.TextView;
 import com.gudong.gankio.R;
 import com.gudong.gankio.data.entity.Girl;
 import com.gudong.gankio.ui.widget.RatioImageView;
+import com.gudong.gankio.util.DateUtil;
+import com.squareup.picasso.Callback;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -27,6 +31,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     private List<Girl> mListData;
     private Context mContext;
     private IClickItem mIClickItem;
+    private float[]array = new float[]{1,0,0,0,-70,
+            0,1,0,0,-70,
+            0,0,1,0,-70,
+            0,0,0,1,0,};
 
     public MainListAdapter(Context context) {
         mContext = context;
@@ -70,27 +78,31 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     @Override
     public void onBindViewHolder(final ViewHolder holder,final int position) {
         Girl entity = mListData.get(position);
-        Picasso.with(mContext).load(entity.url).into(holder.mIvIndexPhoto);
-        holder.mTvIndexIntro.setText(entity.desc);
+        Picasso.with(mContext).load(entity.url).into(holder.mIvIndexPhoto, new Callback() {
+            @Override
+            public void onSuccess() {
+                ColorMatrix cm = new ColorMatrix(array);
+                holder.mIvIndexPhoto.setColorFilter(new ColorMatrixColorFilter(cm));
+            }
+
+            @Override
+            public void onError() {
+
+            }
+        });
+        holder.mTvTime.setText(DateUtil.toDate(entity.publishedAt));
         if(mIClickItem!=null){
             holder.mIvIndexPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mIClickItem.onClickPhoto(position, holder.mIvIndexPhoto);
-                }
-            });
-            holder.mTvIndexIntro.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    mIClickItem.onClickDesc(position,holder.mTvIndexIntro);
+                    mIClickItem.onClickPhoto(position, holder.mIvIndexPhoto,holder.mTvTime);
                 }
             });
         }
     }
 
     public interface IClickItem{
-        void onClickPhoto(int position,View view);
-        void onClickDesc(int position,View view);
+        void onClickPhoto(int position,View view,View textView);
     }
 
     @Override
@@ -107,8 +119,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder{
         @Bind(R.id.iv_index_photo)
         RatioImageView mIvIndexPhoto;
-        @Bind(R.id.tv_index_intro)
-        TextView mTvIndexIntro;
+        @Bind(R.id.tv_time)
+        TextView mTvTime;
 
         ViewHolder(View view) {
             super(view);

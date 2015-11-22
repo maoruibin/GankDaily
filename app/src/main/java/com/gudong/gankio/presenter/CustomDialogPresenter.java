@@ -1,25 +1,24 @@
 package com.gudong.gankio.presenter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
+import android.webkit.JavascriptInterface;
+import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.Toast;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.view.ICustomDialog;
 import com.gudong.gankio.ui.fragment.CustomWebViewDialog;
-import com.squareup.okhttp.HttpUrl;
-import com.squareup.okhttp.internal.framed.Http2;
-import com.squareup.okhttp.internal.http.HttpDate;
-import com.squareup.okhttp.internal.http.HttpMethod;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 
 /**
  * Created by GuDong on 11/6/15 16:00.
@@ -33,7 +32,7 @@ public class CustomDialogPresenter extends BasePresenter<ICustomDialog> {
 
     private static final String KEY_UTF_8 = "UTF_8";
 
-    public CustomDialogPresenter(Context context, ICustomDialog view) {
+    public CustomDialogPresenter(Activity context, ICustomDialog view) {
         super(context, view);
     }
 
@@ -60,10 +59,9 @@ public class CustomDialogPresenter extends BasePresenter<ICustomDialog> {
         String htmlFileName = fragment.getArguments().getString(EXTRA_HTML_FILE_NAME);
         int accentColor = fragment.getArguments().getInt(EXTRA_ACCENT_COLOR);
 
-
         final WebView webView = (WebView) customView.findViewById(R.id.webview);
-        webView.getSettings().setDefaultTextEncodingName(KEY_UTF_8);
-        loadData(webView,htmlFileName,accentColor);
+        setWebView(webView);
+        loadData(webView, htmlFileName, accentColor);
 
         AlertDialog dialog = new AlertDialog.Builder(mContext)
                 .setTitle(dialogTitle)
@@ -72,6 +70,12 @@ public class CustomDialogPresenter extends BasePresenter<ICustomDialog> {
                 .show();
 
         return dialog;
+    }
+
+    private void setWebView(WebView webView){
+        WebSettings settings = webView.getSettings();
+        settings.setDefaultTextEncodingName(KEY_UTF_8);
+        settings.setJavaScriptEnabled(true);
     }
 
     private void loadData(WebView webView,String htmlFileName,int accentColor){

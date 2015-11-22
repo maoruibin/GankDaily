@@ -1,15 +1,17 @@
 package com.gudong.gankio.data.entity;
 
+import com.gudong.gankio.core.GankCategory;
 import com.litesuits.orm.db.annotation.Column;
 import com.litesuits.orm.db.annotation.Table;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by GuDong on 15/10/8.
  * Contact with 1252768410@qq.com
  */
-@Table("ganks")public class Gank extends Soul{
+@Table("ganks")public class Gank extends Soul implements Cloneable,Serializable{
 
     /**
      * createdAt : 2015-10-06T08:23:35.565Z
@@ -30,4 +32,24 @@ import java.util.Date;
     @Column("updatedAt") public Date updatedAt;
     @Column("createdAt") public Date createdAt;
     @Column("publishedAt") public Date publishedAt;
+
+    /**
+     * this item is header type of gank or not,if true, this item will show category name
+     */
+    public boolean isHeader;
+
+    public boolean is妹子(){
+        return type.equals(GankCategory.福利.name());
+    }
+
+    @Override
+    public Gank clone() {
+        Gank gank = null;
+        try{
+            gank = (Gank)super.clone();
+        }catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+        }
+        return gank;
+    }
 }

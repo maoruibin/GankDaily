@@ -5,6 +5,8 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
     <application
         android:allowBackup="true"
@@ -12,6 +14,24 @@
         android:label="@string/app_name"
         android:name=".GankApp"
         android:theme="@style/AppTheme" >
+
+        <!-- begin umeng -->
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="5650375a67e58e74200023bd"/>
+        <meta-data
+            android:name="UMENG_CHANNEL"
+            android:value="${UMENG_CHANNEL_VALUE}" />
+        <service
+            android:name="com.umeng.update.net.DownloadingService"
+            android:process=":DownloadingService" >
+        </service>
+        <activity
+            android:name="com.umeng.update.UpdateDialogActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+        </activity>
+        <!-- end umeng -->
+
         <activity
             android:name=".ui.activity.MainActivity"
             android:label="@string/app_name" >
@@ -26,8 +46,8 @@
             android:label="@string/title_activity_girl_detail" >
         </activity>
         <activity
-            android:name=".ui.activity.GankDetailActivity"
-            android:label="@string/title_activity_gank" >
+            android:name=".ui.activity.ViewListActivity"
+            android:label="@string/title_activity_view_list" >
         </activity>
         <activity
             android:name=".ui.activity.WebActivity"

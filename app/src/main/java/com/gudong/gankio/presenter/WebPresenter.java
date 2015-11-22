@@ -1,6 +1,6 @@
 package com.gudong.gankio.presenter;
 
-import android.content.Context;
+import android.app.Activity;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.text.TextUtils;
@@ -15,7 +15,7 @@ import com.gudong.gankio.presenter.view.IWebView;
  * Contact with 1252768410@qq.com.
  */
 public class WebPresenter extends BasePresenter<IWebView> {
-    public WebPresenter(Context context, IWebView view) {
+    public WebPresenter(Activity context, IWebView view) {
         super(context, view);
     }
     
@@ -53,8 +53,8 @@ public class WebPresenter extends BasePresenter<IWebView> {
         }
 
         @Override
-        public void onPageCommitVisible(WebView view, String url) {
-            super.onPageCommitVisible(view, url);
+        public void onPageFinished(WebView view, String url) {
+            super.onPageFinished(view, url);
             mView.hideRefresh();
         }
 
