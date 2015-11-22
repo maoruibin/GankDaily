@@ -60,21 +60,14 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
      */
     boolean isLoadMore = true;
 
-    public static void gotoGankActivity(BaseActivity activity, Gank gank,Boolean load_more,final View viewImage,final View viewText) {
-        Intent intent = new Intent(activity, MainActivity.class);
-        intent.putExtra(EXTRA_BUNDLE_GANK, gank);
-        intent.putExtra(EXTRA_BUNDLE_LOAD_MORE, load_more);
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                activity,new Pair<View, String>(viewImage,
-                        VIEW_NAME_HEADER_IMAGE),
-                new Pair<View, String>(viewText,
-                        VIEW_NAME_HEADER_TITLE));
-        ActivityCompat.startActivity(activity, intent, activityOptions.toBundle());
-    }
-
     @Override
     protected int getLayout() {
         return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initPresenter() {
+        mPresenter = new MainPresenter(this, this);
     }
 
     @Override
@@ -102,32 +95,6 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
         getData();
     }
 
-    /**
-     *  if the getIntent() contains Gank entity, it indicates this activity is used to show one Day gank info
-     */
-    private void prepareShowGankDetailView(){
-        Gank gank = (Gank) getIntent().getSerializableExtra(EXTRA_BUNDLE_GANK);
-        if(gank != null){
-            setTitle(DateUtil.toDate(gank.publishedAt), true);
-            mRvGank.post(new Runnable() {
-                @Override
-                public void run() {
-                    View gankGrilView = mRvGank.getChildAt(0);
-                    RatioImageView mImageView= ButterKnife.findById(gankGrilView, R.id.iv_index_photo);
-                    TextView mTvTime = ButterKnife.findById(gankGrilView,R.id.tv_video_name);
-
-                    ViewCompat.setTransitionName(mImageView, VIEW_NAME_HEADER_IMAGE);
-                    ViewCompat.setTransitionName(mTvTime, VIEW_NAME_HEADER_TITLE);
-                }
-            });
-        }
-    }
-
-    @Override
-    protected void initPresenter() {
-        mPresenter = new MainPresenter(this, this);
-    }
-
     @Override
     protected void onRefreshStarted() {
         getData();
@@ -136,15 +103,6 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
     @Override
     protected boolean prepareRefresh() {
         return mPresenter.shouldRefillData();
-    }
-
-    private void getData() {
-        Gank gank = (Gank) getIntent().getSerializableExtra(EXTRA_BUNDLE_GANK);
-        if(gank==null){
-            mPresenter.getData(new Date(System.currentTimeMillis()));
-        }else{
-            mPresenter.getData(gank.publishedAt);
-        }
     }
 
     @Override
@@ -204,7 +162,6 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
         DialogUtil.showCustomDialog(this, getSupportFragmentManager(), getString(R.string.change_log), assetFileName, "");
     }
 
-
     @Override
     public void showEmptyView() {
         //our meizi will not empty and we can new it
@@ -214,6 +171,59 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
     public void showErrorView(Throwable throwable) {
         throwable.printStackTrace();
     }
+
+    @Override
+    public void onClickGankItemGirl(Gank gank, View viewImage, View viewText) {
+        GirlFaceActivity.gotoWatchGirlDetail(this, gank.url, DateUtil.toDate(gank.publishedAt), viewImage, viewText);
+    }
+
+    @Override
+    public void onClickGankItemNormal(Gank gank, View view) {
+        WebActivity.gotoWebActivity(this, gank.url, gank.desc);
+    }
+
+    public static void gotoGankActivity(BaseActivity activity, Gank gank,Boolean load_more,final View viewImage,final View viewText) {
+        Intent intent = new Intent(activity, MainActivity.class);
+        intent.putExtra(EXTRA_BUNDLE_GANK, gank);
+        intent.putExtra(EXTRA_BUNDLE_LOAD_MORE, load_more);
+        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                activity,new Pair<View, String>(viewImage,
+                        VIEW_NAME_HEADER_IMAGE),
+                new Pair<View, String>(viewText,
+                        VIEW_NAME_HEADER_TITLE));
+        ActivityCompat.startActivity(activity, intent, activityOptions.toBundle());
+    }
+
+    private void getData() {
+        Gank gank = (Gank) getIntent().getSerializableExtra(EXTRA_BUNDLE_GANK);
+        if(gank==null){
+            mPresenter.getData(new Date(System.currentTimeMillis()));
+        }else{
+            mPresenter.getData(gank.publishedAt);
+        }
+    }
+
+    /**
+     *  if the getIntent() contains Gank entity, it indicates this activity is used to show one Day gank info
+     */
+    private void prepareShowGankDetailView(){
+        Gank gank = (Gank) getIntent().getSerializableExtra(EXTRA_BUNDLE_GANK);
+        if(gank != null){
+            setTitle(DateUtil.toDate(gank.publishedAt), true);
+            mRvGank.post(new Runnable() {
+                @Override
+                public void run() {
+                    View gankGrilView = mRvGank.getChildAt(0);
+                    RatioImageView mImageView = ButterKnife.findById(gankGrilView, R.id.iv_index_photo);
+                    TextView mTvTime = ButterKnife.findById(gankGrilView, R.id.tv_video_name);
+
+                    ViewCompat.setTransitionName(mImageView, VIEW_NAME_HEADER_IMAGE);
+                    ViewCompat.setTransitionName(mTvTime, VIEW_NAME_HEADER_TITLE);
+                }
+            });
+        }
+    }
+
 
     private void initRecycleView() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
@@ -231,20 +241,11 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
                 if (!mSwipeRefreshLayout.isRefreshing() && isBottom && mHasMoreData && isLoadMore) {
                     showRefresh();
                     mPresenter.getDataMore();
-                }else if(!mHasMoreData){
+                } else if (!mHasMoreData) {
                     hasNoMoreData();
                 }
             }
         });
     }
 
-    @Override
-    public void onClickGankItemGirl(Gank gank, View viewImage, View viewText) {
-        GirlFaceActivity.gotoWatchGirlDetail(this, gank.url, DateUtil.toDate(gank.publishedAt), viewImage, viewText);
-    }
-
-    @Override
-    public void onClickGankItemNormal(Gank gank, View view) {
-        WebActivity.gotoWebActivity(this, gank.url, gank.desc);
-    }
 }
