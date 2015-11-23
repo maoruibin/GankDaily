@@ -26,18 +26,15 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
     protected P mPresenter;
 
     /**
+     * TODO use Dagger2 instance Presenter
+     */
+    protected abstract void initPresenter();
+
+    /**
      * set layout of this activity
      * @return the id of layout
      */
     protected abstract int getLayout();
-
-    /**
-     * set the id of menu
-     * @return if values is less then zero ,and the activity will not show menu
-     */
-    protected int getMenuRes(){
-        return -1;
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -61,16 +58,19 @@ public abstract class BaseActivity<P extends BasePresenter> extends AppCompatAct
         MobclickAgent.onPause(this);
     }
 
-    /**
-     * TODO use Dagger2 instance Presenter
-     */
-    protected abstract void initPresenter();
-
     private void checkPresenterIsNull(){
         if(mPresenter == null){
             throw new IllegalStateException("please init mPresenter in initPresenter() method ");
         }
     }
+
+    /**
+     * set the id of menu
+     * @return if values is less then zero ,and the activity will not show menu
+     */
+    protected int getMenuRes(){
+        return -1;
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

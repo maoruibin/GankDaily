@@ -2,6 +2,7 @@ package com.gudong.gankio.presenter;
 
 import android.app.Activity;
 
+import com.gudong.gankio.BuildConfig;
 import com.gudong.gankio.data.GankData;
 import com.gudong.gankio.data.entity.Gank;
 import com.gudong.gankio.presenter.view.IMainView;
@@ -28,6 +29,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
     private Date mCurrentDate;
     List<Gank> mGankList = new ArrayList<>();
     private int mCountOfGetMoreDataEmpty = 0;
+
     public MainPresenter(Activity context, IMainView view) {
         super(context, view);
     }
@@ -39,6 +41,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
     public void checkAutoUpdateByUmeng() {
         if(mContext.getIntent().getSerializableExtra("BUNDLE_GANK") == null){
+            UmengUpdateAgent.setUpdateCheckConfig(BuildConfig.DEBUG);
             //check update even in 2g/3g/4g condition
             UmengUpdateAgent.setUpdateOnlyWifi(false);
             UmengUpdateAgent.update(mContext);

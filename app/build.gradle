@@ -47,7 +47,11 @@ android {
         }
 
         debug{
-
+            //如果签名配置不为空 则设置签名信息
+            if (signingConfigs.release != null) {
+                println 'use release build signing'
+                signingConfig signingConfigs.release
+            }
         }
     }
 
@@ -113,6 +117,8 @@ dependencies {
     compile 'com.squareup.retrofit:retrofit:1.9.0'
 
     compile 'com.commit451:PhotoView:1.2.4'
+
+    compile 'com.github.bumptech.glide:glide:3.6.1'
 
     compile 'com.umeng.analytics:analytics:latest.integration'
 }

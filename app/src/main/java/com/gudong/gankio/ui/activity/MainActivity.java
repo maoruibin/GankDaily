@@ -20,7 +20,7 @@ import com.gudong.gankio.presenter.MainPresenter;
 import com.gudong.gankio.presenter.view.IMainView;
 import com.gudong.gankio.ui.BaseActivity;
 import com.gudong.gankio.ui.BaseSwipeRefreshActivity;
-import com.gudong.gankio.ui.adapter.GankListAdapter;
+import com.gudong.gankio.ui.adapter.MainListAdapter;
 import com.gudong.gankio.ui.widget.RatioImageView;
 import com.gudong.gankio.util.DateUtil;
 import com.gudong.gankio.util.DialogUtil;
@@ -37,7 +37,7 @@ import butterknife.ButterKnife;
  * if getIntent() contains bundle of EXTRA_BUNDLE_GANK ,it indicate this Activity is MainActivity ,
  * otherwise this Activity is a GankActivity used to show Gank info of one day
  */
-public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implements IMainView<Gank>,GankListAdapter.IClickMainItem {
+public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implements IMainView<Gank>,MainListAdapter.IClickMainItem {
 
     private static final String EXTRA_BUNDLE_GANK = "BUNDLE_GANK";
     private static final String EXTRA_BUNDLE_LOAD_MORE = "BUNDLE_LOAD_MORE";
@@ -47,7 +47,7 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
 
     @Bind(R.id.rv_gank)
     RecyclerView mRvGank;
-    GankListAdapter mAdapter;
+    MainListAdapter mAdapter;
 
     /**
      * the flag of has more data or not
@@ -73,11 +73,11 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mPresenter.checkAutoUpdateByUmeng();
         initRecycleView();
         setTitle(getString(R.string.app_name), false);
         isLoadMore = getIntent().getBooleanExtra(EXTRA_BUNDLE_LOAD_MORE,true);
         //check update info by Umeng
-        mPresenter.checkAutoUpdateByUmeng();
         mPresenter.checkVersionInfo();
         prepareShowGankDetailView();
     }
@@ -228,7 +228,7 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
     private void initRecycleView() {
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this);
         mRvGank.setLayoutManager(layoutManager);
-        mAdapter = new GankListAdapter(this);
+        mAdapter = new MainListAdapter(this);
         mAdapter.setIClickItem(this);
         mRvGank.setAdapter(mAdapter);
 

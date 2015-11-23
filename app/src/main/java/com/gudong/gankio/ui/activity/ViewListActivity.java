@@ -13,7 +13,7 @@ import com.gudong.gankio.data.entity.Girl;
 import com.gudong.gankio.presenter.ViewListPresenter;
 import com.gudong.gankio.presenter.view.IViewListView;
 import com.gudong.gankio.ui.BaseSwipeRefreshActivity;
-import com.gudong.gankio.ui.adapter.MainListAdapter;
+import com.gudong.gankio.ui.adapter.ViewListAdapter;
 
 import java.util.List;
 
@@ -25,12 +25,12 @@ import butterknife.Bind;
  * Created by GuDong on 9/27/15.
  * Contact with 1252768410@qq.com
  */
-public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter> implements MainListAdapter.IClickItem,IViewListView<Girl> {
+public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter> implements ViewListAdapter.IClickItem,IViewListView<Girl> {
 
     @Bind(R.id.rcv_index_content)
     RecyclerView mRcvIndexContent;
 
-    private MainListAdapter mAdapter;
+    private ViewListAdapter mAdapter;
     private boolean mHasMoreData = true;
 
     @Override
@@ -53,7 +53,7 @@ public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter
     private void initRecycleView(){
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         mRcvIndexContent.setLayoutManager(layoutManager);
-        mAdapter = new MainListAdapter(this);
+        mAdapter = new ViewListAdapter(this);
         mAdapter.setIClickItem(this);
         mRcvIndexContent.setAdapter(mAdapter);
 

@@ -30,6 +30,12 @@ GankDaily,每日提供技术干货的App。
 为每一个 Activity 编写一个对应一个 Presenter(控制器)类，让 Activity 担当纯粹的 View 角色，这样 Activity 就主要负责一些界面更新操作，
 具体的业务逻辑都交托给 Presenter 层处理。代码一下子就变得整洁多了。
 
+
+更多关于项目中对 MVP 模式的实践，这里自己整理的一篇博客进行详细介绍。
+
+[MVP 模式在 GankDaily 中的应用](http://maoruibin.github.io/technology/2015/11/23/gank_mvp_introduce.html)
+
+
 ### 下载体验 ###
 
 [fir下载](http://fir.im/gankdaily)<br>
