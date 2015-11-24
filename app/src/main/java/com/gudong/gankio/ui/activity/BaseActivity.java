@@ -1,4 +1,4 @@
-package com.gudong.gankio.ui;
+package com.gudong.gankio.ui.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;

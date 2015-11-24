@@ -15,8 +15,7 @@ import android.widget.ImageView;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.GirlFacePresenter;
-import com.gudong.gankio.presenter.view.IGirlFaceView;
-import com.gudong.gankio.ui.BaseActivity;
+import com.gudong.gankio.ui.view.IGirlFaceView;
 import com.gudong.gankio.util.AndroidUtils;
 import com.gudong.gankio.util.ToastUtils;
 import com.squareup.picasso.Picasso;

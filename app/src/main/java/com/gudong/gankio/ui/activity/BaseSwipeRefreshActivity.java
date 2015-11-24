@@ -1,4 +1,4 @@
-package com.gudong.gankio.ui;
+package com.gudong.gankio.ui.activity;
 
 import android.os.Bundle;
 import android.support.annotation.CheckResult;
@@ -6,7 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.BasePresenter;
-import com.gudong.gankio.presenter.view.ISwipeRefreshView;
+import com.gudong.gankio.ui.view.ISwipeRefreshView;
 
 import butterknife.Bind;
 

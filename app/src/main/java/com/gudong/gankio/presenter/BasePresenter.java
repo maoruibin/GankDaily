@@ -4,7 +4,7 @@ import android.app.Activity;
 
 import com.gudong.gankio.core.GuDong;
 import com.gudong.gankio.core.MainFactory;
-import com.gudong.gankio.presenter.view.IBaseView;
+import com.gudong.gankio.ui.view.IBaseView;
 
 /**
  * Created by GuDong on 10/29/15 14:08.

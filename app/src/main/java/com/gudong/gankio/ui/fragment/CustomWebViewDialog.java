@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.CustomDialogPresenter;
-import com.gudong.gankio.presenter.view.ICustomDialog;
+import com.gudong.gankio.ui.view.ICustomDialog;
 import com.gudong.gankio.util.DialogUtil;
 
 /**
@@ -41,7 +41,7 @@ public class CustomWebViewDialog extends DialogFragment implements ICustomDialog
         } catch (InflateException e) {
             throw new IllegalStateException("This device does not support Web Views.");
         }
-        return mPresenter.makeDialog(this,customView);
+        return mPresenter.makeOkDialog(this,customView);
     }
 
     public class WebAppInterface {

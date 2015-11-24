@@ -15,7 +15,7 @@ import android.widget.TextView;
 import com.gudong.gankio.R;
 import com.gudong.gankio.core.GankCategory;
 import com.gudong.gankio.data.entity.Gank;
-import com.gudong.gankio.ui.BaseActivity;
+import com.gudong.gankio.ui.activity.BaseActivity;
 import com.gudong.gankio.ui.widget.RatioImageView;
 import com.gudong.gankio.util.DateUtil;
 import com.gudong.gankio.util.StringStyleUtils;

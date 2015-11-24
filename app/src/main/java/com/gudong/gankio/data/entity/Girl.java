@@ -1,7 +1,5 @@
 package com.gudong.gankio.data.entity;
 
-import com.litesuits.orm.db.annotation.Column;
-import com.litesuits.orm.db.annotation.Table;
 
 import java.util.Date;
 
@@ -9,7 +7,7 @@ import java.util.Date;
  * Created by GuDong on 15/10/8.
  * Contact with 1252768410@qq.com
  */
-@Table("girls")public class Girl extends Soul {
+public class Girl extends Soul {
 
     /**
      * createdAt : 2015-10-07T05:42:23.910Z
@@ -22,12 +20,12 @@ import java.util.Date;
      * updatedAt : 2015-10-08T01:29:49.400Z
      */
 
-    @Column("used") public boolean used;
-    @Column("type") public String type;
-    @Column("url") public String url;
-    @Column("who") public String who;
-    @Column("desc") public String desc;
-    @Column("createdAt") public Date createdAt;
-    @Column("publishedAt") public Date publishedAt;
-    @Column("updatedAt") public Date updatedAt;
+    public boolean used;
+    public String type;
+    public String url;
+    public String who;
+    public String desc;
+    public Date createdAt;
+    public Date publishedAt;
+    public Date updatedAt;
 }

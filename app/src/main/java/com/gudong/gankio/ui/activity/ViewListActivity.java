@@ -11,8 +11,7 @@ import com.gudong.gankio.R;
 import com.gudong.gankio.data.entity.Gank;
 import com.gudong.gankio.data.entity.Girl;
 import com.gudong.gankio.presenter.ViewListPresenter;
-import com.gudong.gankio.presenter.view.IViewListView;
-import com.gudong.gankio.ui.BaseSwipeRefreshActivity;
+import com.gudong.gankio.ui.view.IViewListView;
 import com.gudong.gankio.ui.adapter.ViewListAdapter;
 
 import java.util.List;

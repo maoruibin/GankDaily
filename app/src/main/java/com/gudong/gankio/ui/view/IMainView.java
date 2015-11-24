@@ -1,4 +1,4 @@
-package com.gudong.gankio.presenter.view;
+package com.gudong.gankio.ui.view;
 
 import com.gudong.gankio.data.entity.Soul;
 

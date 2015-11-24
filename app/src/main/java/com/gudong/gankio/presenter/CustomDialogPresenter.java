@@ -1,19 +1,17 @@
 package com.gudong.gankio.presenter;
 
 import android.app.Activity;
-import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.gudong.gankio.R;
-import com.gudong.gankio.presenter.view.ICustomDialog;
+import com.gudong.gankio.ui.view.ICustomDialog;
 import com.gudong.gankio.ui.fragment.CustomWebViewDialog;
 
 import java.io.BufferedReader;
@@ -54,7 +52,7 @@ public class CustomDialogPresenter extends BasePresenter<ICustomDialog> {
     }
 
 
-    public AlertDialog makeDialog(Fragment fragment,View customView) {
+    public AlertDialog makeOkDialog(Fragment fragment, View customView) {
         String dialogTitle = fragment.getArguments().getString(EXTRA_DIALOG_TITLE);
         String htmlFileName = fragment.getArguments().getString(EXTRA_HTML_FILE_NAME);
         int accentColor = fragment.getArguments().getInt(EXTRA_ACCENT_COLOR);
@@ -70,6 +68,35 @@ public class CustomDialogPresenter extends BasePresenter<ICustomDialog> {
                 .show();
 
         return dialog;
+    }
+
+    /**
+     * show positive na
+     * @param fragment
+     * @param customView
+     * @return
+     */
+    public AlertDialog makeMulActionDialog(Fragment fragment, View customView,
+                                           String ok, DialogInterface.OnClickListener okListener,
+                                           String negative, DialogInterface.OnClickListener negativeListener,
+                                           String neutral,DialogInterface.OnClickListener neutralListener) {
+            String dialogTitle = fragment.getArguments().getString(EXTRA_DIALOG_TITLE);
+            String htmlFileName = fragment.getArguments().getString(EXTRA_HTML_FILE_NAME);
+            int accentColor = fragment.getArguments().getInt(EXTRA_ACCENT_COLOR);
+
+            final WebView webView = (WebView) customView.findViewById(R.id.webview);
+            setWebView(webView);
+            loadData(webView, htmlFileName, accentColor);
+
+            AlertDialog dialog = new AlertDialog.Builder(mContext)
+                    .setTitle(dialogTitle)
+                    .setView(customView)
+                    .setPositiveButton(ok, okListener)
+                    .setNegativeButton(negative,negativeListener)
+                    .setNeutralButton(neutral,neutralListener)
+                    .show();
+
+            return dialog;
     }
 
     private void setWebView(WebView webView){

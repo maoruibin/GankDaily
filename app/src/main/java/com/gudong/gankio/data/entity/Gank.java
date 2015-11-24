@@ -1,8 +1,6 @@
 package com.gudong.gankio.data.entity;
 
 import com.gudong.gankio.core.GankCategory;
-import com.litesuits.orm.db.annotation.Column;
-import com.litesuits.orm.db.annotation.Table;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -11,7 +9,7 @@ import java.util.Date;
  * Created by GuDong on 15/10/8.
  * Contact with 1252768410@qq.com
  */
-@Table("ganks")public class Gank extends Soul implements Cloneable,Serializable{
+public class Gank extends Soul implements Cloneable,Serializable{
 
     /**
      * createdAt : 2015-10-06T08:23:35.565Z
@@ -24,14 +22,14 @@ import java.util.Date;
      * updatedAt : 2015-10-08T01:29:49.219Z
      */
 
-    @Column("used") public boolean used;
-    @Column("type") public String type;
-    @Column("url") public String url;
-    @Column("who") public String who;
-    @Column("desc") public String desc;
-    @Column("updatedAt") public Date updatedAt;
-    @Column("createdAt") public Date createdAt;
-    @Column("publishedAt") public Date publishedAt;
+    public boolean used;
+    public String type;
+    public String url;
+    public String who;
+    public String desc;
+    public Date updatedAt;
+    public Date createdAt;
+    public Date publishedAt;
 
     /**
      * this item is header type of gank or not,if true, this item will show category name

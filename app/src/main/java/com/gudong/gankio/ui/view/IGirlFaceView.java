@@ -1,4 +1,4 @@
-package com.gudong.gankio.presenter.view;
+package com.gudong.gankio.ui.view;
 
 /**
  * Created by GuDong on 11/2/15 18:21.

@@ -8,7 +8,7 @@ import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
-import com.gudong.gankio.presenter.view.IWebView;
+import com.gudong.gankio.ui.view.IWebView;
 
 /**
  * Created by GuDong on 11/2/15 17:05.

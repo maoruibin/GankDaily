@@ -16,7 +16,7 @@ android {
     }
 
     signingConfigs {
-        //指定名叫release的一个签名对象 会在下面的脚本(73行开始)中，动态根据配置文件实例化
+        //指定名叫release的一个签名对象 会在下面的脚本(85行开始)中，动态根据配置文件设置属性
         release
     }
 
@@ -28,6 +28,7 @@ android {
             zipAlignEnabled true
             //移除无用的资源文件
             shrinkResources true
+            //设置混淆配置文件
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             //如果签名配置不为空 则设置签名信息
             if (signingConfigs.release != null) {
@@ -47,11 +48,6 @@ android {
         }
 
         debug{
-            //如果签名配置不为空 则设置签名信息
-            if (signingConfigs.release != null) {
-                println 'use release build signing'
-                signingConfig signingConfigs.release
-            }
         }
     }
 
