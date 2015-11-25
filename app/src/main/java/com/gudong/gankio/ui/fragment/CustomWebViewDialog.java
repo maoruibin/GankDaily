@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.CustomDialogPresenter;
-import com.gudong.gankio.presenter.view.ICustomDialog;
+import com.gudong.gankio.ui.iui.ICustomDialog;
 import com.gudong.gankio.util.DialogUtil;
 
 /**

@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.gudong.gankio.data.PrettyGirlData;
 import com.gudong.gankio.data.entity.Girl;
 import com.gudong.gankio.data.休息视频Data;
-import com.gudong.gankio.presenter.view.IViewListView;
+import com.gudong.gankio.ui.iui.IViewListView;
 
 import java.util.List;
 

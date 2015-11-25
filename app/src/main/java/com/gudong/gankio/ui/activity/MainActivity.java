@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.gudong.gankio.R;
 import com.gudong.gankio.data.entity.Gank;
 import com.gudong.gankio.presenter.MainPresenter;
-import com.gudong.gankio.presenter.view.IMainView;
+import com.gudong.gankio.ui.iui.IMainView;
 import com.gudong.gankio.ui.BaseActivity;
 import com.gudong.gankio.ui.BaseSwipeRefreshActivity;
 import com.gudong.gankio.ui.adapter.MainListAdapter;

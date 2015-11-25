@@ -11,7 +11,7 @@ import android.provider.MediaStore;
 import android.text.TextUtils;
 
 import com.gudong.gankio.R;
-import com.gudong.gankio.presenter.view.IGirlFaceView;
+import com.gudong.gankio.ui.iui.IGirlFaceView;
 import com.gudong.gankio.util.TaskUtils;
 import com.orhanobut.logger.Logger;
 import com.squareup.picasso.Picasso;

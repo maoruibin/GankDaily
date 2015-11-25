@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.WebPresenter;
-import com.gudong.gankio.presenter.view.IWebView;
+import com.gudong.gankio.ui.iui.IWebView;
 import com.gudong.gankio.ui.BaseActivity;
 import com.gudong.gankio.ui.BaseSwipeRefreshActivity;
 import com.gudong.gankio.util.AndroidUtils;

@@ -1,4 +1,4 @@
-package com.gudong.gankio.presenter.view;
+package com.gudong.gankio.ui.iui;
 
 /**
  * 所有项目View的基类  恩，目前是这么想的

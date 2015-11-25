@@ -1,4 +1,4 @@
-package com.gudong.gankio.presenter.view;
+package com.gudong.gankio.ui.iui;
 
 /**
  * if you implement ISwipeRefreshView , you view should be a list view

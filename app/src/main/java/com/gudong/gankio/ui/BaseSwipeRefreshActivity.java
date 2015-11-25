@@ -6,7 +6,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.BasePresenter;
-import com.gudong.gankio.presenter.view.ISwipeRefreshView;
+import com.gudong.gankio.ui.iui.ISwipeRefreshView;
 
 import butterknife.Bind;
 

@@ -1,19 +1,16 @@
 package com.gudong.gankio.presenter;
 
 import android.app.Activity;
-import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
-import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.widget.Toast;
 
 import com.gudong.gankio.R;
-import com.gudong.gankio.presenter.view.ICustomDialog;
+import com.gudong.gankio.ui.iui.ICustomDialog;
 import com.gudong.gankio.ui.fragment.CustomWebViewDialog;
 
 import java.io.BufferedReader;

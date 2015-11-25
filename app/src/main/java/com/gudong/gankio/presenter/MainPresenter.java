@@ -5,7 +5,7 @@ import android.app.Activity;
 import com.gudong.gankio.BuildConfig;
 import com.gudong.gankio.data.GankData;
 import com.gudong.gankio.data.entity.Gank;
-import com.gudong.gankio.presenter.view.IMainView;
+import com.gudong.gankio.ui.iui.IMainView;
 import com.gudong.gankio.util.AndroidUtils;
 import com.umeng.update.UmengUpdateAgent;
 
