@@ -38,19 +38,20 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     PhotoViewAttacher mAttacher;
 
 
-    public static void gotoWatchGirlDetail(BaseActivity context, String url, String title, final View viewImage, final View viewText) {
-        Intent intent = new Intent(context, GirlFaceActivity.class);
-        intent.putExtra(EXTRA_BUNDLE_URL, url);
-        intent.putExtra(EXTRA_BUNDLE_TITLE, title);
+    public static void gotoWatchGirlDetail(BaseActivity context,String url,String title,final View viewImage,final View viewText){
+        Intent intent = new Intent(context,GirlFaceActivity.class);
+        intent.putExtra(EXTRA_BUNDLE_URL,url);
+        intent.putExtra(EXTRA_BUNDLE_TITLE,title);
 
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                context, new Pair<View, String>(viewImage,
+                context,new Pair<View, String>(viewImage,
                         VIEW_NAME_HEADER_IMAGE),
                 new Pair<View, String>(viewText,
                         VIEW_NAME_HEADER_TITLE));
 
         ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
     }
+
 
 
     @Override
@@ -100,6 +101,11 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     }
 
     @Override
+    protected void initPresenter() {
+        mPresenter = new GirlFacePresenter(this,this);
+    }
+
+    @Override
     protected int getMenuRes() {
         return R.menu.menu_girl_detail;
     }
@@ -135,7 +141,6 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
      * Try and add a {@link Transition.TransitionListener} to the entering shared element
      * {@link Transition}. We do this so that we can load the full-size image after the transition
      * has completed.
-     *
      * @return true if we were successful in adding a listener to the enter transition
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
