@@ -35,7 +35,7 @@ import butterknife.ButterKnife;
  * if getIntent() contains bundle of EXTRA_BUNDLE_GANK ,it indicate this Activity is MainActivity ,
  * otherwise this Activity is a GankActivity used to show Gank info of one day
  */
-public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implements IMainView<Gank>, MainListAdapter.IClickMainItem {
+public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implements IMainView<Gank>,MainListAdapter.IClickMainItem {
 
     private static final String EXTRA_BUNDLE_GANK = "BUNDLE_GANK";
     private static final String EXTRA_BUNDLE_LOAD_MORE = "BUNDLE_LOAD_MORE";
@@ -64,12 +64,17 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
     }
 
     @Override
+    protected void initPresenter() {
+        mPresenter = new MainPresenter(this, this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mPresenter.checkAutoUpdateByUmeng();
         initRecycleView();
         setTitle(getString(R.string.app_name), false);
-        isLoadMore = getIntent().getBooleanExtra(EXTRA_BUNDLE_LOAD_MORE, true);
+        isLoadMore = getIntent().getBooleanExtra(EXTRA_BUNDLE_LOAD_MORE,true);
         //check update info by Umeng
         mPresenter.checkVersionInfo();
         prepareShowGankDetailView();
@@ -100,20 +105,20 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
 
     @Override
     protected int getMenuRes() {
-        return isLoadMore ? R.menu.menu_main : R.menu.menu_gank;
+        return isLoadMore ?R.menu.menu_main:R.menu.menu_gank;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        switch (id) {
+        switch (id){
             case R.id.action_view_list:
-                startActivity(new Intent(this, ViewListActivity.class));
+                startActivity(new Intent(this,ViewListActivity.class));
                 break;
             case R.id.action_github_tending:
                 String url = getString(R.string.url_github_trending);
                 String title = getString(R.string.action_github_trending);
-                WebActivity.gotoWebActivity(this, url, title);
+                WebActivity.gotoWebActivity(this,url,title);
                 break;
             case R.id.action_about:
                 DialogUtil.showCustomDialog(this, getSupportFragmentManager(), getString(R.string.action_about), "about_gank_app.html", "about");
@@ -121,7 +126,7 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
             case R.id.action_opinion:
                 String urlOpinion = getString(R.string.url_github_issue);
                 String titleOpinion = getString(R.string.action_github_issue);
-                WebActivity.gotoWebActivity(this, urlOpinion, titleOpinion);
+                WebActivity.gotoWebActivity(this,urlOpinion,titleOpinion);
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -144,7 +149,7 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
                 .setAction(R.string.action_to_top, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        (mRvGank.getLayoutManager()).smoothScrollToPosition(mRvGank, null, 0);
+                        (mRvGank.getLayoutManager()).smoothScrollToPosition(mRvGank,null,0);
                     }
                 })
                 .show();
@@ -175,12 +180,12 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
         WebActivity.gotoWebActivity(this, gank.url, gank.desc);
     }
 
-    public static void gotoGankActivity(BaseActivity activity, Gank gank, Boolean load_more, final View viewImage, final View viewText) {
+    public static void gotoGankActivity(BaseActivity activity, Gank gank,Boolean load_more,final View viewImage,final View viewText) {
         Intent intent = new Intent(activity, MainActivity.class);
         intent.putExtra(EXTRA_BUNDLE_GANK, gank);
         intent.putExtra(EXTRA_BUNDLE_LOAD_MORE, load_more);
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                activity, new Pair<View, String>(viewImage,
+                activity,new Pair<View, String>(viewImage,
                         VIEW_NAME_HEADER_IMAGE),
                 new Pair<View, String>(viewText,
                         VIEW_NAME_HEADER_TITLE));
@@ -189,19 +194,19 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
 
     private void getData() {
         Gank gank = (Gank) getIntent().getSerializableExtra(EXTRA_BUNDLE_GANK);
-        if (gank == null) {
+        if(gank==null){
             mPresenter.getData(new Date(System.currentTimeMillis()));
-        } else {
+        }else{
             mPresenter.getData(gank.publishedAt);
         }
     }
 
     /**
-     * if the getIntent() contains Gank entity, it indicates this activity is used to show one Day gank info
+     *  if the getIntent() contains Gank entity, it indicates this activity is used to show one Day gank info
      */
-    private void prepareShowGankDetailView() {
+    private void prepareShowGankDetailView(){
         Gank gank = (Gank) getIntent().getSerializableExtra(EXTRA_BUNDLE_GANK);
-        if (gank != null) {
+        if(gank != null){
             setTitle(DateUtil.toDate(gank.publishedAt), true);
             mRvGank.post(new Runnable() {
                 @Override
