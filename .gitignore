@@ -3,7 +3,9 @@
 /gradle.properties
 /.idea
 /.idea/workspace.xml
+/.idea/gradle.xml
 /.idea/libraries
+/app/app.iml
 .DS_Store
 /build
 /captures
