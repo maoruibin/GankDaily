@@ -18,16 +18,16 @@ import com.gudong.gankio.util.AndroidUtils;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implements IWebView{
+public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implements IWebView {
     private static final String EXTRA_URL = "URL";
     private static final String EXTRA_TITLE = "TITLE";
 
     @Bind(R.id.wb_content)
     WebView mWbContent;
 
-    public static void gotoWebActivity(BaseActivity context,String url,String title){
-        Intent intent = new Intent(context,WebActivity.class);
-        intent.putExtra(EXTRA_URL,url);
+    public static void gotoWebActivity(BaseActivity context, String url, String title) {
+        Intent intent = new Intent(context, WebActivity.class);
+        intent.putExtra(EXTRA_URL, url);
         intent.putExtra(EXTRA_TITLE, title);
         context.startActivity(intent);
     }
@@ -39,11 +39,11 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
         String url = getIntent().getStringExtra(EXTRA_URL);
         String title = getIntent().getStringExtra(EXTRA_TITLE);
 
-        if(!TextUtils.isEmpty(title)){
-            setTitle(title,true);
+        if (!TextUtils.isEmpty(title)) {
+            setTitle(title, true);
         }
         mPresenter.setUpWebView(mWbContent);
-        mPresenter.loadUrl(mWbContent,url);
+        mPresenter.loadUrl(mWbContent, url);
     }
 
     @Override
@@ -61,12 +61,7 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
         refresh();
     }
 
-    @Override
-    protected void initPresenter() {
-        mPresenter = new WebPresenter(this,this);
-    }
-
-    private void refresh(){
+    private void refresh() {
         mWbContent.reload();
     }
 
@@ -118,7 +113,7 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
 
     @Override
     public void showLoadErrorMessage(String message) {
-        Snackbar.make(mWbContent,message,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mWbContent, message, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
