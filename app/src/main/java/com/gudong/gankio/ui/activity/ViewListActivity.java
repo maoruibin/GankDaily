@@ -44,6 +44,11 @@ public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter
         initRecycleView();
     }
 
+    @Override
+    protected void initPresenter() {
+        mPresenter = new ViewListPresenter(this,this);
+    }
+
     private void initRecycleView(){
         final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
         mRcvIndexContent.setLayoutManager(layoutManager);
