@@ -23,22 +23,16 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v4.util.Pair;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.TextView;
 
 import com.gudong.gankio.R;
 import com.gudong.gankio.data.entity.Gank;
 import com.gudong.gankio.presenter.MainPresenter;
-import com.gudong.gankio.ui.view.IMainView;
 import com.gudong.gankio.ui.adapter.MainListAdapter;
-import com.gudong.gankio.ui.widget.RatioImageView;
+import com.gudong.gankio.ui.view.IMainView;
 import com.gudong.gankio.util.DateUtil;
 import com.gudong.gankio.util.DialogUtil;
 
@@ -46,7 +40,6 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 
 /**
  * this Activity is use to MainActivity and when scroll bottom , it will load more data.
@@ -55,12 +48,6 @@ import butterknife.ButterKnife;
  * otherwise this Activity is a GankActivity used to show Gank info of one day
  */
 public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implements IMainView<Gank>,MainListAdapter.IClickMainItem {
-
-    private static final String EXTRA_BUNDLE_GANK = "BUNDLE_GANK";
-    private static final String EXTRA_BUNDLE_LOAD_MORE = "BUNDLE_LOAD_MORE";
-
-    private static final String VIEW_NAME_HEADER_IMAGE = "detail:header:image";
-    private static final String VIEW_NAME_HEADER_TITLE = "detail:header:title";
 
     @Bind(R.id.rv_gank)
     RecyclerView mRvGank;
@@ -71,11 +58,6 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
      */
     private boolean mHasMoreData = true;
 
-    /**
-     * the flag to district whether scroll bottom load more data or not
-     * default is load more data
-     */
-    boolean isLoadMore = true;
 
     @Override
     protected int getLayout() {
@@ -93,10 +75,8 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
         mPresenter.checkAutoUpdateByUmeng();
         initRecycleView();
         setTitle(getString(R.string.app_name), false);
-        isLoadMore = getIntent().getBooleanExtra(EXTRA_BUNDLE_LOAD_MORE,true);
         //check update info by Umeng
         mPresenter.checkVersionInfo();
-        prepareShowGankDetailView();
     }
 
     @Override
@@ -124,7 +104,7 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
 
     @Override
     protected int getMenuRes() {
-        return isLoadMore ?R.menu.menu_main:R.menu.menu_gank;
+        return R.menu.menu_main;
     }
 
     @Override
@@ -199,46 +179,8 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
         WebActivity.gotoWebActivity(this, gank.url, gank.desc);
     }
 
-    public static void gotoGankActivity(BaseActivity activity, Gank gank,Boolean load_more,final View viewImage,final View viewText) {
-        Intent intent = new Intent(activity, MainActivity.class);
-        intent.putExtra(EXTRA_BUNDLE_GANK, gank);
-        intent.putExtra(EXTRA_BUNDLE_LOAD_MORE, load_more);
-        ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                activity,new Pair<View, String>(viewImage,
-                        VIEW_NAME_HEADER_IMAGE),
-                new Pair<View, String>(viewText,
-                        VIEW_NAME_HEADER_TITLE));
-        ActivityCompat.startActivity(activity, intent, activityOptions.toBundle());
-    }
-
     private void getData() {
-        Gank gank = (Gank) getIntent().getSerializableExtra(EXTRA_BUNDLE_GANK);
-        if(gank==null){
-            mPresenter.getData(new Date(System.currentTimeMillis()));
-        }else{
-            mPresenter.getData(gank.publishedAt);
-        }
-    }
-
-    /**
-     *  if the getIntent() contains Gank entity, it indicates this activity is used to show one Day gank info
-     */
-    private void prepareShowGankDetailView(){
-        Gank gank = (Gank) getIntent().getSerializableExtra(EXTRA_BUNDLE_GANK);
-        if(gank != null){
-            setTitle(DateUtil.toDate(gank.publishedAt), true);
-            mRvGank.post(new Runnable() {
-                @Override
-                public void run() {
-                    View gankGrilView = mRvGank.getChildAt(0);
-                    RatioImageView mImageView = ButterKnife.findById(gankGrilView, R.id.iv_index_photo);
-                    TextView mTvTime = ButterKnife.findById(gankGrilView, R.id.tv_video_name);
-
-                    ViewCompat.setTransitionName(mImageView, VIEW_NAME_HEADER_IMAGE);
-                    ViewCompat.setTransitionName(mTvTime, VIEW_NAME_HEADER_TITLE);
-                }
-            });
-        }
+        mPresenter.getData(new Date(System.currentTimeMillis()));
     }
 
 
@@ -255,7 +197,7 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
                 super.onScrolled(recyclerView, dx, dy);
                 boolean isBottom =
                         layoutManager.findLastCompletelyVisibleItemPosition() >= mAdapter.getItemCount() - 4;
-                if (!mSwipeRefreshLayout.isRefreshing() && isBottom && mHasMoreData && isLoadMore) {
+                if (!mSwipeRefreshLayout.isRefreshing() && isBottom && mHasMoreData) {
                     showRefresh();
                     mPresenter.getDataMore();
                 } else if (!mHasMoreData) {

@@ -1,6 +1,8 @@
 ###GankDaily
 
-GankDaily,每日提供技术干货的App。
+![icon](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png "")
+
+每日提供技术干货的App
 
 ###干货数据源
 

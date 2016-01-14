@@ -32,6 +32,7 @@ import com.gudong.gankio.data.entity.Girl;
 import com.gudong.gankio.presenter.ViewListPresenter;
 import com.gudong.gankio.ui.view.IViewListView;
 import com.gudong.gankio.ui.adapter.ViewListAdapter;
+import com.gudong.gankio.util.DateUtil;
 
 import java.util.List;
 
@@ -122,7 +123,7 @@ public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter
             gank.type = clickGirl.type;
             gank.url = clickGirl.url;
             gank.publishedAt = clickGirl.publishedAt;
-            MainActivity.gotoGankActivity(this,gank,false,viewImage,viewText);
+            GirlFaceActivity.gotoWatchGirlDetail(this, gank.url, DateUtil.toDate(gank.publishedAt), viewImage, viewText);
         }
     }
 
