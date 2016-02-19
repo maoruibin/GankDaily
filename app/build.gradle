@@ -9,7 +9,8 @@ android {
     buildToolsVersion "23.0.2"
     defaultConfig {
         applicationId "com.gudong.gankio"
-        minSdkVersion 14
+        //For use TYPE_TOAST
+        minSdkVersion 19
         targetSdkVersion 23
         versionCode 5
         versionName "1.1"
