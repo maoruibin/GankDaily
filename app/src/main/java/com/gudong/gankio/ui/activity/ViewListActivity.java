@@ -42,7 +42,7 @@ import butterknife.Bind;
 /**
  * show all meizis on this activity ,enjoy it
  * Created by GuDong on 9/27/15.
- * Contact with 1252768410@qq.com
+ * Contact with gudong.name@gmail.com
  */
 public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter> implements ViewListAdapter.IClickItem,IViewListView<Girl> {
 

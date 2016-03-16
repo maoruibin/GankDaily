@@ -37,7 +37,7 @@ import rx.functions.Func2;
 /**
  * 首页视图控制器
  * Created by GuDong on 10/29/15 14:07.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class ViewListPresenter extends BasePresenter<IViewListView>{
     

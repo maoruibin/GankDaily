@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * 妹子数据集合对象
  * Created by GuDong on 9/28/15.
- * Contact with 1252768410@qq.com
+ * Contact with gudong.name@gmail.com
  */
 public class PrettyGirlData extends BaseData {
     public List<Girl>results;

@@ -45,7 +45,7 @@ import butterknife.ButterKnife;
 /**
  * 主页数据显示Adapter
  * Created by GuDong on 9/28/15.
- * Contact with 1252768410@qq.com
+ * Contact with gudong.name@gmail.com
  */
 public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHolder> {
     private List<Girl> mListData;

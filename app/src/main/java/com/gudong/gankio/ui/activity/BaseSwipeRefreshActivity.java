@@ -32,7 +32,7 @@ import butterknife.Bind;
 /**
  * base activity for that have a function with swipe refresh
  * Created by GuDong on 10/29/15 18:06.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends BaseActivity<P> implements ISwipeRefreshView {
 

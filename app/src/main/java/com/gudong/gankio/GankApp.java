@@ -27,7 +27,7 @@ import com.orhanobut.logger.Logger;
 
 /**
  * Created by GuDong on 10/14/15 23:42.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class GankApp extends Application {
     public static Context sContext;

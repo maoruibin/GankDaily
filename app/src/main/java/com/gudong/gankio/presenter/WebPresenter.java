@@ -31,7 +31,7 @@ import com.gudong.gankio.ui.view.IWebView;
 
 /**
  * Created by GuDong on 11/2/15 17:05.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class WebPresenter extends BasePresenter<IWebView> {
     public WebPresenter(Activity context, IWebView view) {

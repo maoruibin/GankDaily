@@ -40,7 +40,7 @@ import rx.functions.Func1;
 /**
  * the Presenter of MainActivity
  * Created by GuDong on 11/2/15 14:38.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class MainPresenter extends BasePresenter<IMainView> {
 

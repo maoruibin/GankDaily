@@ -21,7 +21,7 @@ package com.gudong.gankio.ui.view;
 
 /**
  * Created by GuDong on 11/2/15 18:21.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public interface IGirlFaceView extends IBaseView {
 

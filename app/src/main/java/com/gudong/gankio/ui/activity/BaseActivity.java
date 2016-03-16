@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by GuDong on 10/14/15 23:05.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public abstract class BaseActivity<P extends BasePresenter> extends AppCompatActivity {
     @Bind(R.id.toolbar)

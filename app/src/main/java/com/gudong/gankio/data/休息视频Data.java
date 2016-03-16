@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Created by GuDong on 15/10/8.
- * Contact with 1252768410@qq.com
+ * Contact with gudong.name@gmail.com
  */
 public class 休息视频Data extends BaseData {
     public List<Gank>results;

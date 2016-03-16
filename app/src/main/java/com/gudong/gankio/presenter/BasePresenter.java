@@ -27,7 +27,7 @@ import com.gudong.gankio.ui.view.IBaseView;
 
 /**
  * Created by GuDong on 10/29/15 14:08.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class BasePresenter<GV extends IBaseView> {
 

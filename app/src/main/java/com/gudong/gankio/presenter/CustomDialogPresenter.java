@@ -39,7 +39,7 @@ import java.io.InputStreamReader;
 
 /**
  * Created by GuDong on 11/6/15 16:00.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class CustomDialogPresenter extends BasePresenter<ICustomDialog> {
 

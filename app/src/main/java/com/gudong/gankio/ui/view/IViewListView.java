@@ -26,7 +26,7 @@ import java.util.List;
 /**
  * index view
  * Created by GuDong on 10/29/15 14:10.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public interface IViewListView<T extends Soul> extends ISwipeRefreshView{
     /**

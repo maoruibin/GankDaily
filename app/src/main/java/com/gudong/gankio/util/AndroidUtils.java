@@ -37,7 +37,7 @@ import java.lang.reflect.Field;
 
 /**
  * Created by GuDong on 10/14/15 22:22.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class AndroidUtils {
     public static void copyToClipBoard(Context context, String text, String success) {

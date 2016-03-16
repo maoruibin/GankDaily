@@ -25,7 +25,7 @@ import java.util.List;
 
 /**
  * Created by GuDong on 11/2/15 14:39.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public interface IMainView<T extends Soul>  extends ISwipeRefreshView {
     /**

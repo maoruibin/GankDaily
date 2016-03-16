@@ -29,7 +29,7 @@ import rx.Observable;
 
 /**
  * Created by GuDong on 9/27/15.
- * Contact with 1252768410@qq.com
+ * Contact with gudong.name@gmail.com
  */
 public interface GuDong {
 

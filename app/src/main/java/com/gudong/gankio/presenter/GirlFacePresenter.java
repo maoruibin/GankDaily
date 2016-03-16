@@ -42,7 +42,7 @@ import java.io.IOException;
 
 /**
  * Created by GuDong on 11/2/15 18:22.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class GirlFacePresenter extends BasePresenter<IGirlFaceView> {
     public GirlFacePresenter(Activity context, IGirlFaceView view) {

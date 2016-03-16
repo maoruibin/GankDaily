@@ -50,7 +50,7 @@ import butterknife.ButterKnife;
 
 /**
  * Created by GuDong on 10/9/15 22:53.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHolderItem> {
     private List<Gank> mGankList;

@@ -22,7 +22,7 @@ package com.gudong.gankio.ui.view;
 /**
  * if you implement ISwipeRefreshView , you view should be a list view
  * Created by GuDong on 10/29/15 18:08.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public interface ISwipeRefreshView extends IBaseView {
 

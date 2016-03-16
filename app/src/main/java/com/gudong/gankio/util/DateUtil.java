@@ -26,7 +26,7 @@ import java.util.Date;
 
 /**
  * Created by GuDong on 10/9/15 22:06.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class DateUtil {
 

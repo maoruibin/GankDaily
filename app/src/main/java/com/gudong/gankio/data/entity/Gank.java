@@ -26,7 +26,7 @@ import java.util.Date;
 
 /**
  * Created by GuDong on 15/10/8.
- * Contact with 1252768410@qq.com
+ * Contact with gudong.name@gmail.com
  */
 public class Gank extends Soul implements Cloneable,Serializable{
 

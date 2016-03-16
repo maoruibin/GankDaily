@@ -64,7 +64,7 @@
     /*
      *       
      * Copyright (C) 2015 Drakeet <drakeet.me@gmail.com>
-     * Copyright (C) 2015 GuDong <maoruibin9035@gmail.com>
+     * Copyright (C) 2015 GuDong <gudong.name@gmail.com>
      *
      * Meizhi is free software: you can redistribute it and/or modify
      * it under the terms of the GNU General Public License as published by

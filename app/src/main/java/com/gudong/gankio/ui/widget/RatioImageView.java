@@ -25,7 +25,7 @@ import android.widget.ImageView;
 
 /**
  * Created by GuDong on 10/29/15 21:05.
- * Contact with 1252768410@qq.com.
+ * Contact with gudong.name@gmail.com.
  */
 public class RatioImageView extends ImageView {
     private int originalWidth;
