@@ -36,11 +36,12 @@
 
 [MVP 模式在 GankDaily 中的应用](http://maoruibin.github.io/technology/2015/11/23/gank_mvp_introduce.html)
 
-### 下载体验 ###
-
-[fir下载](http://fir.im/gankdaily)<br>
+### 下载 ###
+<a href="https://play.google.com/store/apps/details?id=com.gudong.gankio" target="_blank"><img src="http://www.android.com/images/brand/get_it_on_play_logo_large.png"/></a>
 <br>
-![扫码下载](/art/download.png "扫码下载")
+[fir下载](http://fir.im/gankdaily)<br>
+
+
    
 ###依赖库   
 
@@ -57,15 +58,6 @@
 * [浅谈 MVP in Android](http://blog.csdn.net/lmj623565791/article/details/46596109)
 * [Effective Android UI](https://github.com/pedrovgs/EffectiveAndroidUI)
 
-###一点思考
-
-整个项目，我都在竭尽全力的优化代码，以期让代码变得更优雅、更简洁、更容易阅读。但是因为一些业务逻辑的存在，还是会有一些让人困惑的代码，
-所以代码还是不够美,后续还会继续优化。
-
-整个项目使用 MVP 模式进行重构，其实整个重构过程还是比较顺利的，不过最终重构完成后，对 MVP 有了一些新的认识，
-在一些方面，其实 MVP 表现的并不好，你会发现项目中一下子多出来好多view接口(ui/view/)，而且他们并没有什么可复用的价值。
-
-但是 MVP 对项目解耦、分层有很大的益处，这一点也许在大项目中可以看的更清楚，对于一般的小项目，如果使用MVP的话，可能并不是最明智的选择。
 
 ### License
 
