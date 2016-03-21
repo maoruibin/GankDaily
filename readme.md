@@ -34,7 +34,7 @@
 
 更多关于项目中对 MVP 模式的实践，这里自己整理了一篇博客进行详细介绍。
 
-[MVP 模式在 GankDaily 中的应用](http://maoruibin.github.io/technology/2015/11/23/gank_mvp_introduce.html)
+[MVP 模式在 GankDaily 中的应用](http://gudong.name/advanced/2015/11/23/gank_mvp_introduce.html)
 
 ### 下载 ###
 <a href="https://play.google.com/store/apps/details?id=com.gudong.gankio" target="_blank"><img src="http://www.android.com/images/brand/get_it_on_play_logo_large.png"/></a>
