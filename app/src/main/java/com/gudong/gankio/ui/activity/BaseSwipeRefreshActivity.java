@@ -34,7 +34,8 @@ import butterknife.Bind;
  * Created by GuDong on 10/29/15 18:06.
  * Contact with gudong.name@gmail.com.
  */
-public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends BaseActivity<P> implements ISwipeRefreshView {
+public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends BaseActivity<P>
+        implements ISwipeRefreshView {
 
     @Bind(R.id.swipe_refresh_layout)
     protected SwipeRefreshLayout mSwipeRefreshLayout;
@@ -45,8 +46,9 @@ public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends 
         initSwipeLayout();
     }
 
-    private void initSwipeLayout(){
-        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color.colorPrimaryDark, R.color.colorAccent);
+    private void initSwipeLayout() {
+        mSwipeRefreshLayout.setColorSchemeResources(R.color.colorPrimary, R.color
+                .colorPrimaryDark, R.color.colorAccent);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -62,9 +64,10 @@ public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends 
 
     /**
      * check data status
+     *
      * @return return true indicate it should load data really else indicate don't refresh
      */
-    protected boolean prepareRefresh(){
+    protected boolean prepareRefresh() {
         return true;
     }
 
@@ -79,11 +82,11 @@ public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends 
         mSwipeRefreshLayout.postDelayed(new Runnable() {
             @Override
             public void run() {
-                if(mSwipeRefreshLayout != null){
+                if (mSwipeRefreshLayout != null) {
                     mSwipeRefreshLayout.setRefreshing(false);
                 }
             }
-        },1000);
+        }, 1000);
     }
 
     @Override
@@ -93,10 +96,11 @@ public abstract class BaseSwipeRefreshActivity<P extends BasePresenter> extends 
 
     /**
      * check refresh layout is refreshing
+     *
      * @return if the refresh layout is refreshing return true else return false
      */
     @CheckResult
-    protected boolean isRefreshing(){
+    protected boolean isRefreshing() {
         return mSwipeRefreshLayout.isRefreshing();
     }
 

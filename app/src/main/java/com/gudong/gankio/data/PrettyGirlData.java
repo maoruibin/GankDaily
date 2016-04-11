@@ -29,5 +29,5 @@ import java.util.List;
  * Contact with gudong.name@gmail.com
  */
 public class PrettyGirlData extends BaseData {
-    public List<Girl>results;
+    public List<Girl> results;
 }

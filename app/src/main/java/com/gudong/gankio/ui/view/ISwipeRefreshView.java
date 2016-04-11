@@ -26,7 +26,6 @@ package com.gudong.gankio.ui.view;
  */
 public interface ISwipeRefreshView extends IBaseView {
 
-
     void getDataFinish();
 
     void showEmptyView();

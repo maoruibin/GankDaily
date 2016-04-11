@@ -50,26 +50,28 @@ public class AndroidUtils {
 
     /**
      * get accent color
+     *
      * @param context
      * @return
      */
-    public static int getAccentColor(Context context){
+    public static int getAccentColor(Context context) {
         TypedValue typedValue = new TypedValue();
         Resources.Theme theme = context.getTheme();
         theme.resolveAttribute(R.attr.colorPrimary, typedValue, true);
         return typedValue.data;
     }
 
-    public static boolean isAndroidL(){
+    public static boolean isAndroidL() {
         return Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP;
     }
 
     /**
      * base on Toolbar get the TitleView by reflect way
+     *
      * @param obj Toolbar
      * @return the title text view in Toolbar
      */
-    public static TextView getTitleViewInToolbar(Toolbar obj){
+    public static TextView getTitleViewInToolbar(Toolbar obj) {
         TextView textView = null;
         try {
             Field title = obj.getClass().getDeclaredField("mTitleTextView");
@@ -85,12 +87,14 @@ public class AndroidUtils {
 
     /**
      * get app version info
+     *
      * @param context context
      * @return app version info if occur exception return unknow
      */
-    public static String getAppVersion(Context context){
+    public static String getAppVersion(Context context) {
         try {
-            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            PackageInfo info = context.getPackageManager().getPackageInfo(context.getPackageName
+                    (), 0);
             return info.versionName;
         } catch (Exception e) {
             e.printStackTrace();
@@ -98,20 +102,20 @@ public class AndroidUtils {
         }
     }
 
-    public static void setCurrentVersion(Context context,String version){
-        putStringPreference(context,"current_version",version);
+    public static void setCurrentVersion(Context context, String version) {
+        putStringPreference(context, "current_version", version);
     }
 
-    public static String getLocalVersion(Context context){
+    public static String getLocalVersion(Context context) {
         return getStringPreference(context, "current_version", "");
     }
 
-    public static String getStringPreference(Context context,String key,String def){
+    public static String getStringPreference(Context context, String key, String def) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         return sp.getString(key, def);
     }
 
-    public static void putStringPreference(Context context,String key,String value){
+    public static void putStringPreference(Context context, String key, String value) {
         SharedPreferences sp = PreferenceManager.getDefaultSharedPreferences(context);
         sp.edit().putString(key, value).apply();
     }

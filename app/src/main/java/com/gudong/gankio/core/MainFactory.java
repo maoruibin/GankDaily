@@ -33,9 +33,9 @@ public class MainFactory {
 
     protected static final Object monitor = new Object();
 
-    public static GuDong getGuDongInstance(){
-        synchronized (monitor){
-            if(mGuDong==null){
+    public static GuDong getGuDongInstance() {
+        synchronized (monitor) {
+            if (mGuDong == null) {
                 mGuDong = new MainRetrofit().getService();
             }
             return mGuDong;

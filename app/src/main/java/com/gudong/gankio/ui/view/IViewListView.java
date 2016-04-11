@@ -28,15 +28,17 @@ import java.util.List;
  * Created by GuDong on 10/29/15 14:10.
  * Contact with gudong.name@gmail.com.
  */
-public interface IViewListView<T extends Soul> extends ISwipeRefreshView{
+public interface IViewListView<T extends Soul> extends ISwipeRefreshView {
     /**
      * load data successfully
+     *
      * @param data
      */
     void fillData(List<T> data);
 
     /**
      * append data to history list(load more)
+     *
      * @param data
      */
     void appendMoreDataToView(List<T> data);

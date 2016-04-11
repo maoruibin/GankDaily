@@ -3,7 +3,6 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/GankDaily.iml" filepath="$PROJECT_DIR$/GankDaily.iml" />
-      <module fileurl="file://$PROJECT_DIR$/GankIO.iml" filepath="$PROJECT_DIR$/GankIO.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

@@ -37,7 +37,8 @@ public class MainRetrofit {
 
     final GuDong mService;
 
-    final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'").serializeNulls().create();
+    final Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
+            .serializeNulls().create();
 
     MainRetrofit() {
         OkHttpClient client = new OkHttpClient();
@@ -51,7 +52,7 @@ public class MainRetrofit {
         mService = restAdapter.create(GuDong.class);
     }
 
-    public GuDong getService(){
+    public GuDong getService() {
         return mService;
     }
 }

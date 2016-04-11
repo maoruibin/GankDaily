@@ -44,7 +44,8 @@ import butterknife.Bind;
  * Created by GuDong on 9/27/15.
  * Contact with gudong.name@gmail.com
  */
-public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter> implements ViewListAdapter.IClickItem,IViewListView<Girl> {
+public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter> implements
+        ViewListAdapter.IClickItem, IViewListView<Girl> {
 
     @Bind(R.id.rcv_index_content)
     RecyclerView mRcvIndexContent;
@@ -60,17 +61,18 @@ public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setTitle(getString(R.string.title_activity_view_list),true);
+        setTitle(getString(R.string.title_activity_view_list), true);
         initRecycleView();
     }
 
     @Override
     protected void initPresenter() {
-        mPresenter = new ViewListPresenter(this,this);
+        mPresenter = new ViewListPresenter(this, this);
     }
 
-    private void initRecycleView(){
-        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+    private void initRecycleView() {
+        final StaggeredGridLayoutManager layoutManager = new StaggeredGridLayoutManager(2,
+                StaggeredGridLayoutManager.VERTICAL);
         mRcvIndexContent.setLayoutManager(layoutManager);
         mAdapter = new ViewListAdapter(this);
         mAdapter.setIClickItem(this);
@@ -97,15 +99,16 @@ public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter
         mPresenter.refillGirls();
     }
 
-    @Override @CheckResult
+    @Override
+    @CheckResult
     protected boolean prepareRefresh() {
-        if(mPresenter.shouldRefillGirls()){
+        if (mPresenter.shouldRefillGirls()) {
             mPresenter.resetCurrentPage();
-            if(!isRefreshing()){
+            if (!isRefreshing()) {
                 showRefresh();
             }
             return true;
-        }else{
+        } else {
             return false;
         }
     }
@@ -116,14 +119,15 @@ public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter
     }
 
     @Override
-    public void onClickPhoto(int position, View viewImage,View viewText) {
+    public void onClickPhoto(int position, View viewImage, View viewText) {
         Girl clickGirl = mAdapter.getGirl(position);
-        if(clickGirl!=null){
+        if (clickGirl != null) {
             Gank gank = new Gank();
             gank.type = clickGirl.type;
             gank.url = clickGirl.url;
             gank.publishedAt = clickGirl.publishedAt;
-            GirlFaceActivity.gotoWatchGirlDetail(this, gank.url, DateUtil.toDate(gank.publishedAt), viewImage, viewText);
+            GirlFaceActivity.gotoWatchGirlDetail(this, gank.url, DateUtil.toDate(gank
+                    .publishedAt), viewImage, viewText);
         }
     }
 
@@ -139,14 +143,15 @@ public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter
 
     @Override
     public void showEmptyView() {
-        Snackbar.make(mRcvIndexContent, R.string.empty_data_of_girls,Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(mRcvIndexContent, R.string.empty_data_of_girls, Snackbar.LENGTH_SHORT).show();
     }
 
     @Override
-    public void showErrorView(Throwable throwable){
+    public void showErrorView(Throwable throwable) {
         throwable.printStackTrace();
 
-        final Snackbar errorSnack = Snackbar.make(mRcvIndexContent, R.string.error_index_load,Snackbar.LENGTH_INDEFINITE);
+        final Snackbar errorSnack = Snackbar.make(mRcvIndexContent, R.string.error_index_load,
+                Snackbar.LENGTH_INDEFINITE);
         errorSnack.getView().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -160,11 +165,12 @@ public class ViewListActivity extends BaseSwipeRefreshActivity<ViewListPresenter
     @Override
     public void hasNoMoreData() {
         mHasMoreData = false;
-        Snackbar.make(mRcvIndexContent, R.string.no_more_girls,Snackbar.LENGTH_SHORT)
+        Snackbar.make(mRcvIndexContent, R.string.no_more_girls, Snackbar.LENGTH_SHORT)
                 .setAction(R.string.action_to_top, new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        (mRcvIndexContent.getLayoutManager()).smoothScrollToPosition(mRcvIndexContent,null,0);
+                        (mRcvIndexContent.getLayoutManager()).smoothScrollToPosition
+                                (mRcvIndexContent, null, 0);
                     }
                 })
                 .show();

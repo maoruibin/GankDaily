@@ -35,9 +35,10 @@ public class StringStyleUtils {
         return spannableString;
     }
 
-    public static CharSequence getGankInfoSequence(Context context,Gank mGank) {
+    public static CharSequence getGankInfoSequence(Context context, Gank mGank) {
         SpannableStringBuilder builder = new SpannableStringBuilder(mGank.desc).append(
-                StringStyleUtils.format(context, " (via. " + mGank.who + ")", R.style.ViaTextAppearance));
+                StringStyleUtils.format(context, " (via. " + mGank.who + ")", R.style
+                        .ViaTextAppearance));
         return builder.subSequence(0, builder.length());
     }
 }

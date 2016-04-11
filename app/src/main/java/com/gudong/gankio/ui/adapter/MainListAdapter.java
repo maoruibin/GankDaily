@@ -65,16 +65,18 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         mGankList = new ArrayList<>();
         mGankList.add(getDefGankGirl());
 
-        float[]array = new float[]{
-                1,0,0,0,-70,
-                0,1,0,0,-70,
-                0,0,1,0,-70,
-                0,0,0,1,0,
+        float[] array = new float[]{
+                1, 0, 0, 0, -70,
+                0, 1, 0, 0, -70,
+                0, 0, 1, 0, -70,
+                0, 0, 0, 1, 0,
         };
         mColorFilter = new ColorMatrixColorFilter(new ColorMatrix(array));
     }
+
     /**
      * before add data , it will remove history data
+     *
      * @param data
      */
     public void updateWithClear(List<Gank> data) {
@@ -84,6 +86,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
 
     /**
      * add data append to history data*
+     *
      * @param data new data
      */
     public void update(List<Gank> data) {
@@ -94,7 +97,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     /**
      * the type of RecycleView item
      */
-    private enum EItemType{
+    private enum EItemType {
         ITEM_TYPE_GIRL,
         ITEM_TYPE_NORMAL,
         ITEM_TYPE_CATEGOTY;
@@ -103,11 +106,11 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     @Override
     public int getItemViewType(int position) {
         Gank gank = mGankList.get(position);
-        if(gank.is妹子()){
+        if (gank.is妹子()) {
             return EItemType.ITEM_TYPE_GIRL.ordinal();
-        }else if(gank.isHeader){
+        } else if (gank.isHeader) {
             return EItemType.ITEM_TYPE_CATEGOTY.ordinal();
-        }else{
+        } else {
             return EItemType.ITEM_TYPE_NORMAL.ordinal();
         }
     }
@@ -118,7 +121,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         if (viewType == EItemType.ITEM_TYPE_GIRL.ordinal()) {
             view = LayoutInflater.from(mContext).inflate(R.layout.gank_item_girl, null);
             return new ViewHolderItemGirl(view);
-        }else if(viewType == EItemType.ITEM_TYPE_CATEGOTY.ordinal()){
+        } else if (viewType == EItemType.ITEM_TYPE_CATEGOTY.ordinal()) {
             view = LayoutInflater.from(mContext).inflate(R.layout.gank_item_category, null);
             return new ViewHolderItemCategory(view);
         } else {
@@ -144,7 +147,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         public ViewHolderItem(View itemView) {
             super(itemView);
         }
-        abstract void bindItem(Context context,Gank gank);
+
+        abstract void bindItem(Context context, Gank gank);
     }
 
     static class ViewHolderItemNormal extends ViewHolderItem {
@@ -158,7 +162,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindItem(final Context context,final Gank gank){
+        public void bindItem(final Context context, final Gank gank) {
             mTvTitle.setText(StringStyleUtils.getGankInfoSequence(context, gank));
             mRlGankParent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -169,20 +173,20 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         }
     }
 
-   static class ViewHolderItemCategory extends ViewHolderItem {
+    static class ViewHolderItemCategory extends ViewHolderItem {
         @Bind(R.id.tv_category)
         TextView mTvCategory;
 
-       ViewHolderItemCategory(View itemView) {
+        ViewHolderItemCategory(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
 
-       @Override
-       void bindItem(Context context,Gank gank) {
-           mTvCategory.setText(gank.type);
-       }
-   }
+        @Override
+        void bindItem(Context context, Gank gank) {
+            mTvCategory.setText(gank.type);
+        }
+    }
 
     static class ViewHolderItemGirl extends ViewHolderItem {
         @Bind(R.id.tv_video_name)
@@ -197,7 +201,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         }
 
         @Override
-        void bindItem(Context context,final Gank gank) {
+        void bindItem(Context context, final Gank gank) {
             mTvTime.setText(DateUtil.toDate(gank.publishedAt));
             Picasso.with(context)
                     .load(gank.url)
@@ -206,6 +210,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
                         public void onSuccess() {
                             mImageView.setColorFilter(mColorFilter);
                         }
+
                         @Override
                         public void onError() {
 
@@ -226,25 +231,28 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         mIClickItem = IClickItem;
     }
 
-    public interface IClickMainItem{
+    public interface IClickMainItem {
         /**
          * click gank girl info item
+         *
          * @param gank
          * @param viewImage
          * @param viewText
          */
-        void onClickGankItemGirl(Gank gank,View viewImage,View viewText);
+        void onClickGankItemGirl(Gank gank, View viewImage, View viewText);
 
         /**
          * click gank normal info item
+         *
          * @param gank
          * @param view
          */
-        void onClickGankItemNormal(Gank gank,View view);
+        void onClickGankItemNormal(Gank gank, View view);
     }
 
     /**
      * filter list and add category entity into list
+     *
      * @param data source data
      */
     private void formatGankData(List<Gank> data) {
@@ -267,9 +275,10 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
 
     /**
      * get a init Gank entity
+     *
      * @return gank entity
      */
-    private Gank getDefGankGirl(){
+    private Gank getDefGankGirl() {
         Gank gank = new Gank();
         gank.publishedAt = new Date(System.currentTimeMillis());
         gank.url = "empty";
