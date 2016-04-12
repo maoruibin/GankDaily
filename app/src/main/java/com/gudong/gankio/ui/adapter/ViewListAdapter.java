@@ -53,15 +53,16 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
     private IClickItem mIClickItem;
     //blur meizi
     private static ColorFilter mColorFilter;
+
     public ViewListAdapter(Context context) {
         mContext = context;
         mListData = new ArrayList<>();
 
-        float[]array = new float[]{
-                1,0,0,0,-70,
-                0,1,0,0,-70,
-                0,0,1,0,-70,
-                0,0,0,1,0,
+        float[] array = new float[]{
+                1, 0, 0, 0, -70,
+                0, 1, 0, 0, -70,
+                0, 0, 1, 0, -70,
+                0, 0, 0, 1, 0,
         };
         mColorFilter = new ColorMatrixColorFilter(new ColorMatrix(array));
     }
@@ -72,24 +73,26 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
 
     /**
      * before add data , it will remove history data
+     *
      * @param data
      */
-    public void updateWithClear(List<Girl> data){
+    public void updateWithClear(List<Girl> data) {
         mListData.clear();
         mListData.addAll(data);
         notifyDataSetChanged();
     }
 
     /**
-     *  add data append to history data
+     * add data append to history data
+     *
      * @param data new data
      */
-    public void update(List<Girl> data){
+    public void update(List<Girl> data) {
         mListData.addAll(data);
         notifyDataSetChanged();
     }
 
-    public Girl getGirl(int position){
+    public Girl getGirl(int position) {
         return mListData.get(position);
     }
 
@@ -101,7 +104,7 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
     }
 
     @Override
-    public void onBindViewHolder(final ViewHolder holder,final int position) {
+    public void onBindViewHolder(final ViewHolder holder, final int position) {
         Girl entity = mListData.get(position);
 
         Glide.with(mContext)
@@ -115,18 +118,18 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
                     }
                 });
         holder.mTvTime.setText(DateUtil.toDate(entity.publishedAt));
-        if(mIClickItem!=null){
+        if (mIClickItem != null) {
             holder.mIvIndexPhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mIClickItem.onClickPhoto(position, holder.mIvIndexPhoto,holder.mTvTime);
+                    mIClickItem.onClickPhoto(position, holder.mIvIndexPhoto, holder.mTvTime);
                 }
             });
         }
     }
 
-    public interface IClickItem{
-        void onClickPhoto(int position,View view,View textView);
+    public interface IClickItem {
+        void onClickPhoto(int position, View view, View textView);
     }
 
     @Override
@@ -135,12 +138,14 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
     }
 
     /**
-     * This class contains all butterknife-injected Views & Layouts from layout file 'index_listitem.xml'
+     * This class contains all butterknife-injected Views & Layouts from layout file
+     * 'index_listitem.xml'
      * for easy to all layout elements.
      *
-     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github.com/avast)
+     * @author ButterKnifeZelezny, plugin for Android Studio by Avast Developers (http://github
+     * .com/avast)
      */
-    public static class ViewHolder extends RecyclerView.ViewHolder{
+    public static class ViewHolder extends RecyclerView.ViewHolder {
         @Bind(R.id.iv_index_photo)
         RatioImageView mIvIndexPhoto;
         @Bind(R.id.tv_time)
@@ -150,7 +155,7 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
             super(view);
             ButterKnife.bind(this, view);
 
-            mIvIndexPhoto.setOriginalSize(50,50);
+            mIvIndexPhoto.setOriginalSize(50, 50);
         }
     }
 

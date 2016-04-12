@@ -38,15 +38,17 @@ import com.gudong.gankio.util.DialogUtil;
 
 /**
  * CustomWebViewDialog
+ *
  * @author mao
  */
 public class CustomWebViewDialog extends DialogFragment implements ICustomDialog {
     private CustomDialogPresenter mPresenter;
     private WebView mWebView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mPresenter = new CustomDialogPresenter(getActivity(),this);
+        mPresenter = new CustomDialogPresenter(getActivity(), this);
     }
 
     @NonNull
@@ -56,37 +58,48 @@ public class CustomWebViewDialog extends DialogFragment implements ICustomDialog
         try {
             customView = LayoutInflater.from(getActivity()).inflate(R.layout.dialog_webview, null);
             mWebView = (WebView) customView.findViewById(R.id.webview);
-            mWebView.addJavascriptInterface(new WebAppInterface(customView.getContext()),"Android");
+            mWebView.addJavascriptInterface(new WebAppInterface(customView.getContext()),
+                    "Android");
         } catch (InflateException e) {
             throw new IllegalStateException("This device does not support Web Views.");
         }
-        return mPresenter.makeOkDialog(this,customView);
+        return mPresenter.makeOkDialog(this, customView);
     }
 
     public class WebAppInterface {
         Context mContext;
 
-        /** Instantiate the interface and set the context */
+        /**
+         * Instantiate the interface and set the context
+         */
         WebAppInterface(Context c) {
             mContext = c;
         }
 
-        /** Show a toast from the web page */
+        /**
+         * Show a toast from the web page
+         */
         @JavascriptInterface
         public void showToast(String toast) {
             Toast.makeText(mContext, toast, Toast.LENGTH_SHORT).show();
         }
 
-        /** Show a dialog about app **/
+        /**
+         * Show a dialog about app
+         **/
         @JavascriptInterface
-        public void showAbout(){
-            DialogUtil.showCustomDialog(getActivity(), getFragmentManager(), getString(R.string.action_about), "about_gank_app.html", "app");
+        public void showAbout() {
+            DialogUtil.showCustomDialog(getActivity(), getFragmentManager(), getString(R.string
+                    .action_about), "about_gank_app.html", "app");
         }
 
-        /** Show a dialog about gank site **/
+        /**
+         * Show a dialog about gank site
+         **/
         @JavascriptInterface
-        public void showAboutGank(){
-            DialogUtil.showCustomDialog(getActivity(), getFragmentManager(), getString(R.string.action_about_gank), "about_gank_site.html", "site");
+        public void showAboutGank() {
+            DialogUtil.showCustomDialog(getActivity(), getFragmentManager(), getString(R.string
+                    .action_about_gank), "about_gank_site.html", "site");
         }
     }
 

@@ -37,8 +37,8 @@ public class WebPresenter extends BasePresenter<IWebView> {
     public WebPresenter(Activity context, IWebView view) {
         super(context, view);
     }
-    
-    public void setUpWebView(WebView webView){
+
+    public void setUpWebView(WebView webView) {
         WebSettings settings = webView.getSettings();
         settings.setJavaScriptEnabled(true);
         settings.setLoadWithOverviewMode(true);
@@ -48,17 +48,17 @@ public class WebPresenter extends BasePresenter<IWebView> {
         webView.setWebViewClient(new LoveClient());
     }
 
-    public void loadUrl(WebView webView,String url){
+    public void loadUrl(WebView webView, String url) {
         webView.loadUrl(url);
     }
 
     private class LoveClient extends WebViewClient {
 
         public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (TextUtils.isEmpty(url)){
+            if (TextUtils.isEmpty(url)) {
                 return true;
             }
-            if(Uri.parse(url).getHost().equals("github.com")){
+            if (Uri.parse(url).getHost().equals("github.com")) {
                 return false;
             }
             view.loadUrl(url);
@@ -78,7 +78,8 @@ public class WebPresenter extends BasePresenter<IWebView> {
         }
 
         @Override
-        public void onReceivedError(WebView view, int errorCode, String description, String failingUrl) {
+        public void onReceivedError(WebView view, int errorCode, String description, String
+                failingUrl) {
             super.onReceivedError(view, errorCode, description, failingUrl);
             mView.hideRefresh();
             mView.showLoadErrorMessage(description);

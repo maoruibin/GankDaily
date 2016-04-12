@@ -26,6 +26,7 @@ package com.gudong.gankio.ui.view;
 public interface IGirlFaceView extends IBaseView {
 
     void saveSuccess(String message);
+
     void showFailInfo(String error);
 
 }

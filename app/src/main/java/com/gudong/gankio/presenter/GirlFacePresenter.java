@@ -51,12 +51,12 @@ public class GirlFacePresenter extends BasePresenter<IGirlFaceView> {
 
     public void saveFace(String url) {
         if (!TextUtils.isEmpty(url)) {
-            String fileName = url.substring(url.lastIndexOf("/")+1);
+            String fileName = url.substring(url.lastIndexOf("/") + 1);
             saveImageToSdCard(mContext, url, fileName);
         }
     }
 
-    private void saveImageToSdCard(final Context context,final  String url,final  String title) {
+    private void saveImageToSdCard(final Context context, final String url, final String title) {
         TaskUtils.executeAsyncTask(new AsyncTask<Object, Object, Boolean>() {
             @Override
             protected Boolean doInBackground(Object... params) {
@@ -74,9 +74,9 @@ public class GirlFacePresenter extends BasePresenter<IGirlFaceView> {
                 File appDir = new File(getSDPath(), "Meizhi2");
                 if (!appDir.exists()) {
                     boolean is = appDir.mkdir();
-                    if(is){
+                    if (is) {
                         Logger.i("create suc");
-                    }else{
+                    } else {
                         Logger.i("create fail");
                     }
                 }
@@ -129,7 +129,7 @@ public class GirlFacePresenter extends BasePresenter<IGirlFaceView> {
         });
     }
 
-    public String getSDPath(){
+    public String getSDPath() {
         return Environment.getExternalStorageDirectory().toString();
     }
 

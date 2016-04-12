@@ -39,8 +39,8 @@ import rx.functions.Func2;
  * Created by GuDong on 10/29/15 14:07.
  * Contact with gudong.name@gmail.com.
  */
-public class ViewListPresenter extends BasePresenter<IViewListView>{
-    
+public class ViewListPresenter extends BasePresenter<IViewListView> {
+
     private int mCurrentPage = 1;
 
     /**
@@ -52,30 +52,31 @@ public class ViewListPresenter extends BasePresenter<IViewListView>{
         super(context, view);
     }
 
-    public void resetCurrentPage(){
+    public void resetCurrentPage() {
         mCurrentPage = 1;
     }
 
     /**
      * 只有当前只加载了第一页 那么下拉刷新才应该去执行数据请求，如果加载的页数超过两页，
      * 则不去执行重新加载的数据请求，此时的刷新为假刷新，不去请求数据。这是一种良好的用户体验。愚以为~
+     *
      * @return
      */
-    public boolean shouldRefillGirls(){
+    public boolean shouldRefillGirls() {
         return mCurrentPage <= 2;
     }
 
     /**
      * reload girls data it will clear history girls  so bad !
      */
-    public void refillGirls(){
+    public void refillGirls() {
         Observable.zip(
                 mGuDong.getPrettyGirlData(PAGE_SIZE, mCurrentPage),
                 mGuDong.get休息视频Data(PAGE_SIZE, mCurrentPage),
                 new Func2<PrettyGirlData, 休息视频Data, PrettyGirlData>() {
                     @Override
                     public PrettyGirlData call(PrettyGirlData prettyGirlData, 休息视频Data 休息视频Data) {
-                        return createGirlInfoWith休息视频(prettyGirlData,休息视频Data);
+                        return createGirlInfoWith休息视频(prettyGirlData, 休息视频Data);
                     }
                 })
                 .map(new Func1<PrettyGirlData, List<Girl>>() {
@@ -125,14 +126,14 @@ public class ViewListPresenter extends BasePresenter<IViewListView>{
                 });
     }
 
-    public void getDataMore(){
+    public void getDataMore() {
         Observable.zip(
-                mGuDong.getPrettyGirlData(PAGE_SIZE,mCurrentPage),
-                mGuDong.get休息视频Data(PAGE_SIZE,mCurrentPage),
+                mGuDong.getPrettyGirlData(PAGE_SIZE, mCurrentPage),
+                mGuDong.get休息视频Data(PAGE_SIZE, mCurrentPage),
                 new Func2<PrettyGirlData, 休息视频Data, PrettyGirlData>() {
                     @Override
                     public PrettyGirlData call(PrettyGirlData prettyGirlData, 休息视频Data 休息视频Data) {
-                        return createGirlInfoWith休息视频(prettyGirlData,休息视频Data);
+                        return createGirlInfoWith休息视频(prettyGirlData, 休息视频Data);
                     }
                 })
                 .map(new Func1<PrettyGirlData, List<Girl>>() {
@@ -182,13 +183,13 @@ public class ViewListPresenter extends BasePresenter<IViewListView>{
                 });
     }
 
-    private PrettyGirlData createGirlInfoWith休息视频(PrettyGirlData girlData,休息视频Data data){
+    private PrettyGirlData createGirlInfoWith休息视频(PrettyGirlData girlData, 休息视频Data data) {
         int restSize = data.results.size();
         for (int i = 0; i < girlData.results.size(); i++) {
-            if(i<=restSize-1){
+            if (i <= restSize - 1) {
                 Girl girl = girlData.results.get(i);
-                girl.desc+=" "+data.results.get(i).desc;
-            }else{
+                girl.desc += " " + data.results.get(i).desc;
+            } else {
                 break;
             }
         }

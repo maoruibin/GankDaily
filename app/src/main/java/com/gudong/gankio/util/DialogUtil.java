@@ -34,9 +34,10 @@ import com.gudong.gankio.presenter.CustomDialogPresenter;
 public class DialogUtil {
     /**
      * show a dialog which it contain one point message only
+     *
      * @param context context
      */
-    public static void showSinglePointDialog(Context context, String message){
+    public static void showSinglePointDialog(Context context, String message) {
         new AlertDialog.Builder(context)
                 .setTitle(R.string.title_point)
                 .setMessage(message)
@@ -47,13 +48,15 @@ public class DialogUtil {
 
     /**
      * show a custom dialog use a local html file
+     *
      * @param context
      * @param fragmentManager
-     * @param dialogTitle title
-     * @param htmlFileName file name
+     * @param dialogTitle     title
+     * @param htmlFileName    file name
      * @param tag
      */
-    public static void showCustomDialog(Context context, FragmentManager fragmentManager, String dialogTitle, String htmlFileName, String tag) {
+    public static void showCustomDialog(Context context, FragmentManager fragmentManager, String
+            dialogTitle, String htmlFileName, String tag) {
         int accentColor = AndroidUtils.getAccentColor(context);
         CustomDialogPresenter.create(dialogTitle, htmlFileName, accentColor)
                 .show(fragmentManager, tag);

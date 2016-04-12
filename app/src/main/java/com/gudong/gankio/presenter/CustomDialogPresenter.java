@@ -55,12 +55,14 @@ public class CustomDialogPresenter extends BasePresenter<ICustomDialog> {
 
     /**
      * create a custom dialog use web view load layout by html file
+     *
      * @param dialogTitle  dialog title
      * @param htmlFileName html file name
      * @param accentColor  accent color
      * @return a instance of CustomWebViewDialog
      */
-    public static CustomWebViewDialog create(String dialogTitle, String htmlFileName, int accentColor) {
+    public static CustomWebViewDialog create(String dialogTitle, String htmlFileName, int
+            accentColor) {
         CustomWebViewDialog dialog = new CustomWebViewDialog();
         Bundle args = new Bundle();
         args.putString(EXTRA_DIALOG_TITLE, dialogTitle);
@@ -91,56 +93,61 @@ public class CustomDialogPresenter extends BasePresenter<ICustomDialog> {
 
     /**
      * show positive na
+     *
      * @param fragment
      * @param customView
      * @return
      */
     public AlertDialog makeMulActionDialog(Fragment fragment, View customView,
                                            String ok, DialogInterface.OnClickListener okListener,
-                                           String negative, DialogInterface.OnClickListener negativeListener,
-                                           String neutral,DialogInterface.OnClickListener neutralListener) {
-            String dialogTitle = fragment.getArguments().getString(EXTRA_DIALOG_TITLE);
-            String htmlFileName = fragment.getArguments().getString(EXTRA_HTML_FILE_NAME);
-            int accentColor = fragment.getArguments().getInt(EXTRA_ACCENT_COLOR);
+                                           String negative, DialogInterface.OnClickListener
+                                                   negativeListener,
+                                           String neutral, DialogInterface.OnClickListener
+                                                   neutralListener) {
+        String dialogTitle = fragment.getArguments().getString(EXTRA_DIALOG_TITLE);
+        String htmlFileName = fragment.getArguments().getString(EXTRA_HTML_FILE_NAME);
+        int accentColor = fragment.getArguments().getInt(EXTRA_ACCENT_COLOR);
 
-            final WebView webView = (WebView) customView.findViewById(R.id.webview);
-            setWebView(webView);
-            loadData(webView, htmlFileName, accentColor);
+        final WebView webView = (WebView) customView.findViewById(R.id.webview);
+        setWebView(webView);
+        loadData(webView, htmlFileName, accentColor);
 
-            AlertDialog dialog = new AlertDialog.Builder(mContext)
-                    .setTitle(dialogTitle)
-                    .setView(customView)
-                    .setPositiveButton(ok, okListener)
-                    .setNegativeButton(negative,negativeListener)
-                    .setNeutralButton(neutral,neutralListener)
-                    .show();
+        AlertDialog dialog = new AlertDialog.Builder(mContext)
+                .setTitle(dialogTitle)
+                .setView(customView)
+                .setPositiveButton(ok, okListener)
+                .setNegativeButton(negative, negativeListener)
+                .setNeutralButton(neutral, neutralListener)
+                .show();
 
-            return dialog;
+        return dialog;
     }
 
-    private void setWebView(WebView webView){
+    private void setWebView(WebView webView) {
         WebSettings settings = webView.getSettings();
         settings.setDefaultTextEncodingName(KEY_UTF_8);
         settings.setJavaScriptEnabled(true);
     }
 
-    private void loadData(WebView webView,String htmlFileName,int accentColor){
+    private void loadData(WebView webView, String htmlFileName, int accentColor) {
         try {
             StringBuilder buf = new StringBuilder();
             InputStream json = mContext.getAssets().open(htmlFileName);
-            BufferedReader in = new BufferedReader(new InputStreamReader(json,KEY_UTF_8));
+            BufferedReader in = new BufferedReader(new InputStreamReader(json, KEY_UTF_8));
             String str;
             while ((str = in.readLine()) != null)
                 buf.append(str);
             in.close();
 
             String formatLodString = buf.toString()
-                    .replace("{style-placeholder}", "body { background-color: #ffffff; color: #000; }")
+                    .replace("{style-placeholder}", "body { background-color: #ffffff; color: " +
+                            "#000; }")
                     .replace("{link-color}", colorToHex(shiftColor(accentColor, true)))
                     .replace("{link-color-active}", colorToHex(accentColor));
             webView.loadDataWithBaseURL(null, formatLodString, "text/html", KEY_UTF_8, null);
         } catch (Throwable e) {
-            webView.loadData("<h1>Unable to load</h1><p>" + e.getLocalizedMessage() + "</p>", "text/html", KEY_UTF_8);
+            webView.loadData("<h1>Unable to load</h1><p>" + e.getLocalizedMessage() + "</p>",
+                    "text/html", KEY_UTF_8);
         }
     }
 

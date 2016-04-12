@@ -28,5 +28,5 @@ import java.util.List;
  * Contact with gudong.name@gmail.com
  */
 public class 休息视频Data extends BaseData {
-    public List<Gank>results;
+    public List<Gank> results;
 }

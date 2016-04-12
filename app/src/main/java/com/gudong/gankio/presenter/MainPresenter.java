@@ -44,7 +44,7 @@ import rx.functions.Func1;
  */
 public class MainPresenter extends BasePresenter<IMainView> {
 
-    private static final int DAY_OF_MILLISECOND = 24*60*60*1000;
+    private static final int DAY_OF_MILLISECOND = 24 * 60 * 60 * 1000;
     private Date mCurrentDate;
     List<Gank> mGankList = new ArrayList<>();
     private int mCountOfGetMoreDataEmpty = 0;
@@ -54,12 +54,12 @@ public class MainPresenter extends BasePresenter<IMainView> {
     }
 
     /**
-     *  if execute getDataMore method more than once ,this flag will be true else false
+     * if execute getDataMore method more than once ,this flag will be true else false
      */
     private boolean hasLoadMoreData = false;
 
     public void checkAutoUpdateByUmeng() {
-        if(mContext.getIntent().getSerializableExtra("BUNDLE_GANK") == null){
+        if (mContext.getIntent().getSerializableExtra("BUNDLE_GANK") == null) {
             UmengUpdateAgent.setUpdateCheckConfig(BuildConfig.DEBUG);
             //check update even in 2g/3g/4g condition
             UmengUpdateAgent.setUpdateOnlyWifi(false);
@@ -67,7 +67,8 @@ public class MainPresenter extends BasePresenter<IMainView> {
         }
     }
 
-    //check version info ,if the version info has changed,we need pop a dialog to show change log info
+    //check version info ,if the version info has changed,we need pop a dialog to show change log
+    // info
     public void checkVersionInfo() {
         String currentVersion = AndroidUtils.getAppVersion(mContext);
         String localVersionName = AndroidUtils.getLocalVersion(mContext);
@@ -80,7 +81,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
     /**
      * @return
      */
-    public boolean shouldRefillData(){
+    public boolean shouldRefillData() {
         return !hasLoadMoreData;
     }
 
@@ -89,7 +90,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH)+1;
+        int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         mGuDong.getGankData(year, month, day)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -109,7 +110,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
                     @Override
                     public void onCompleted() {
                         // after get data complete, need put off time one day
-                        mCurrentDate = new Date(date.getTime()-DAY_OF_MILLISECOND);
+                        mCurrentDate = new Date(date.getTime() - DAY_OF_MILLISECOND);
                     }
 
                     @Override
@@ -118,9 +119,10 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
                     @Override
                     public void onNext(List<Gank> list) {
-                        // some day the data will be return empty like sunday, so we need get after day data
+                        // some day the data will be return empty like sunday, so we need get
+                        // after day data
                         if (list.isEmpty()) {
-                            getData(new Date(date.getTime()-DAY_OF_MILLISECOND));
+                            getData(new Date(date.getTime() - DAY_OF_MILLISECOND));
                         } else {
                             mCountOfGetMoreDataEmpty = 0;
                             mView.fillData(list);
@@ -134,7 +136,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(mCurrentDate);
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH)+1;
+        int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         mGuDong.getGankData(year, month, day)
                 .observeOn(AndroidSchedulers.mainThread())
@@ -154,7 +156,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
                     @Override
                     public void onCompleted() {
                         // after get data complete, need put off time one day
-                        mCurrentDate = new Date(mCurrentDate.getTime()-DAY_OF_MILLISECOND);
+                        mCurrentDate = new Date(mCurrentDate.getTime() - DAY_OF_MILLISECOND);
                         // now user has execute getMoreData so this flag will be set true
                         //and now when user pull down list we would not refill data
                         hasLoadMoreData = true;
@@ -167,14 +169,15 @@ public class MainPresenter extends BasePresenter<IMainView> {
 
                     @Override
                     public void onNext(List<Gank> list) {
-                        //when this day is weekend , the list will return empty(weekend has not gank info,the editors need rest)
+                        //when this day is weekend , the list will return empty(weekend has not
+                        // gank info,the editors need rest)
                         if (list.isEmpty()) {
                             //record count of empty day
                             mCountOfGetMoreDataEmpty += 1;
                             //if empty day is more than five,it indicate has no more data to show
-                            if(mCountOfGetMoreDataEmpty>=5){
+                            if (mCountOfGetMoreDataEmpty >= 5) {
                                 mView.hasNoMoreData();
-                            }else{
+                            } else {
                                 // we need look forward data
                                 getDataMore();
                             }

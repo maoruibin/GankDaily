@@ -59,17 +59,17 @@ public class RatioImageView extends ImageView {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        if(originalHeight>0 && originalWidth>0){
-            float radio = (float)originalWidth/(float)originalHeight;
+        if (originalHeight > 0 && originalWidth > 0) {
+            float radio = (float) originalWidth / (float) originalHeight;
 
             measureWidth = MeasureSpec.getSize(widthMeasureSpec);
             measureHeight = MeasureSpec.getSize(heightMeasureSpec);
 
-            if(measureWidth>0){
-                measureHeight = (int) ((float)measureWidth/radio);
+            if (measureWidth > 0) {
+                measureHeight = (int) ((float) measureWidth / radio);
             }
-            setMeasuredDimension(measureWidth,measureHeight);
-        }else{
+            setMeasuredDimension(measureWidth, measureHeight);
+        } else {
             super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         }
     }

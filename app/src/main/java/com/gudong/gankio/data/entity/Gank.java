@@ -28,7 +28,7 @@ import java.util.Date;
  * Created by GuDong on 15/10/8.
  * Contact with gudong.name@gmail.com
  */
-public class Gank extends Soul implements Cloneable,Serializable{
+public class Gank extends Soul implements Cloneable, Serializable {
 
     /**
      * createdAt : 2015-10-06T08:23:35.565Z
@@ -55,16 +55,16 @@ public class Gank extends Soul implements Cloneable,Serializable{
      */
     public boolean isHeader;
 
-    public boolean is妹子(){
+    public boolean is妹子() {
         return type.equals(GankCategory.福利.name());
     }
 
     @Override
     public Gank clone() {
         Gank gank = null;
-        try{
-            gank = (Gank)super.clone();
-        }catch(CloneNotSupportedException e) {
+        try {
+            gank = (Gank) super.clone();
+        } catch (CloneNotSupportedException e) {
             e.printStackTrace();
         }
         return gank;
