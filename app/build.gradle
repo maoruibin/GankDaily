@@ -12,8 +12,8 @@ android {
         //For use TYPE_TOAST
         minSdkVersion 19
         targetSdkVersion 23
-        versionCode 5
-        versionName "1.1"
+        versionCode 6
+        versionName "1.2"
     }
 
     signingConfigs {
@@ -23,6 +23,7 @@ android {
 
     buildTypes {
         release {
+            println 'build - release'
             //设置是否混淆
             minifyEnabled true
             //设置压缩对齐
@@ -49,6 +50,7 @@ android {
         }
 
         debug{
+            println 'build - debug'
         }
     }
 
@@ -74,6 +76,13 @@ android {
         play {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "play"]
         }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
     }
 }
 

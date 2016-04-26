@@ -77,7 +77,6 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
         setTitle(getString(R.string.app_name), false);
         //check update info by Umeng
         mPresenter.checkVersionInfo();
-        String ste = "^*";
     }
 
     @Override
@@ -207,5 +206,4 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
             }
         });
     }
-
 }

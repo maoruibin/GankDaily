@@ -27,7 +27,7 @@ public class MainFactory {
     /**
      * 数据主机地址
      */
-    public static final String HOST = "http://gank.avosapps.com/api";
+    public static final String HOST = "http://gank.io/api";
 
     private static GuDong mGuDong;
 
