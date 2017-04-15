@@ -123,6 +123,12 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (mWbContent != null) mWbContent.onResume();
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         if (mWbContent != null) mWbContent.destroy();
