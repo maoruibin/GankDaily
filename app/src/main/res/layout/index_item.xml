@@ -21,20 +21,26 @@
             android:adjustViewBounds="true"
             android:scaleType="centerCrop"/>
 
-        <TextView
-            android:id="@+id/tv_time"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="bottom|right"
-            android:layout_marginRight="@dimen/dp_16"
-            android:layout_marginBottom="@dimen/dp_10"
-            android:textColor="@color/md_white_1000"
-            android:textSize="@dimen/text_size_gank_time_small"
-            android:textStyle="bold"
-            android:visibility="visible"
-            tools:visibility="visible"
-            tools:background="@color/md_amber_100"
-            tools:text="2015年11月11"/>
+            android:background="@color/bk_time"
+            android:layout_gravity="bottom"
+            android:gravity="right"
+            android:padding="@dimen/dp_10">
+            <TextView
+                android:id="@+id/tv_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/md_white_1000"
+                android:textSize="@dimen/text_size_gank_time_small"
+                android:textStyle="bold"
+                android:visibility="visible"
+                tools:visibility="visible"
+                tools:background="@color/md_amber_100"
+                tools:text="2015年11月11"/>
+            </LinearLayout>
     </FrameLayout>
 
 </RelativeLayout>

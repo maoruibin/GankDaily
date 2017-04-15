@@ -13,10 +13,10 @@
     <dimen name="dp_60">60dp</dimen>
     <dimen name="dp_72">72dp</dimen>
 
-    <dimen name="text_size_gank_title">14sp</dimen>
-    <dimen name="text_size_gank_category">16sp</dimen>
-    <dimen name="text_size_gank_time">24sp</dimen>
-    <dimen name="text_size_gank_time_small">18sp</dimen>
+    <dimen name="text_size_gank_title">14dp</dimen>
+    <dimen name="text_size_gank_category">16dp</dimen>
+    <dimen name="text_size_gank_time">24dp</dimen>
+    <dimen name="text_size_gank_time_small">16dp</dimen>
 
     <dimen name="grid_column_width">96dp</dimen>
     <integer name="default_header_display">18</integer>

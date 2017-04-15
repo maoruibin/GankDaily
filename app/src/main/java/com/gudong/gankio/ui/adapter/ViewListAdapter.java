@@ -114,7 +114,7 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
                 .getSize(new SizeReadyCallback() {
                     @Override
                     public void onSizeReady(int width, int height) {
-                        holder.mIvIndexPhoto.setColorFilter(mColorFilter);
+                        //holder.mIvIndexPhoto.setColorFilter(mColorFilter);
                     }
                 });
         holder.mTvTime.setText(DateUtil.toDate(entity.publishedAt));

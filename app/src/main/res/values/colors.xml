@@ -7,4 +7,5 @@
     <color name="colorPrimary">#130c0e</color>
     <color name="colorAccent">#130c0e</color>
     <color name="colorPrimaryDark">#130c0e</color>
+    <color name="bk_time">#64000000</color>
 </resources>

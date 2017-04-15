@@ -189,6 +189,8 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
     static class ViewHolderItemGirl extends ViewHolderItem {
         @Bind(R.id.tv_video_name)
         TextView mTvTime;
+        @Bind(R.id.ll_bk_time)
+        View mBkTime;
         @Bind(R.id.iv_index_photo)
         RatioImageView mImageView;
 
@@ -209,7 +211,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
                         @Override
                         public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
                             super.onResourceReady(resource, glideAnimation);
-                            mImageView.setColorFilter(mColorFilter);
+                            mBkTime.setVisibility(View.VISIBLE);
                         }
                     });
 
