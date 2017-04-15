@@ -30,6 +30,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.target.SizeReadyCallback;
 import com.gudong.gankio.R;
 import com.gudong.gankio.data.entity.Girl;
@@ -107,6 +108,8 @@ public class ViewListAdapter extends RecyclerView.Adapter<ViewListAdapter.ViewHo
         Glide.with(mContext)
                 .load(entity.url)
                 .centerCrop()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
                 .into(holder.mIvIndexPhoto)
                 .getSize(new SizeReadyCallback() {
                     @Override

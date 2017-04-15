@@ -1,17 +1,16 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/md_black_1000"
         tools:context=".ui.activity.GirlFaceActivity">
 
-    <include layout="@layout/model_toolbar"/>
-
     <com.github.chrisbanes.photoview.PhotoView
         android:id="@+id/iv_girl_detail"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:scaleType="fitCenter"/>
 
-</RelativeLayout>
+    <include layout="@layout/model_toolbar"/>
+
+</FrameLayout>

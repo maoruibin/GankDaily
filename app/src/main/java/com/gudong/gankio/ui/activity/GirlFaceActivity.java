@@ -32,6 +32,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.github.chrisbanes.photoview.PhotoView;
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.GirlFacePresenter;
@@ -39,6 +40,7 @@ import com.gudong.gankio.ui.view.IGirlFaceView;
 import com.gudong.gankio.util.ToastUtils;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 
 public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements IGirlFaceView {
 
@@ -54,18 +56,17 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     private String mUrl;
 
 
-    public static void gotoWatchGirlDetail(BaseActivity context,String url,String title,final View viewImage,final View viewText){
-        Intent intent = new Intent(context,GirlFaceActivity.class);
-        intent.putExtra(EXTRA_BUNDLE_URL,url);
-        intent.putExtra(EXTRA_BUNDLE_TITLE,title);
+    public static void gotoWatchGirlDetail(BaseActivity context, String url, String title, final View viewImage, final View viewText) {
+        Intent intent = new Intent(context, GirlFaceActivity.class);
+        intent.putExtra(EXTRA_BUNDLE_URL, url);
+        intent.putExtra(EXTRA_BUNDLE_TITLE, title);
 
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
-                context,new Pair<View, String>(viewImage,
+                context, new Pair<View, String>(viewImage,
                         VIEW_NAME_HEADER_IMAGE));
 
         ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
     }
-
 
 
     @Override
@@ -79,7 +80,6 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
 
         mUrl = getIntent().getStringExtra(EXTRA_BUNDLE_URL);
         setTitle(getIntent().getStringExtra(EXTRA_BUNDLE_TITLE), true);
-
         ViewCompat.setTransitionName(mIvGirlDetail, VIEW_NAME_HEADER_IMAGE);
 
         loadItem();
@@ -88,13 +88,14 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     private void loadItem() {
         Glide.with(this)
                 .load(mUrl)
-                .crossFade()
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .dontAnimate()
                 .into(mIvGirlDetail);
     }
 
     @Override
     protected void initPresenter() {
-        mPresenter = new GirlFacePresenter(this,this);
+        mPresenter = new GirlFacePresenter(this, this);
     }
 
     @Override
@@ -106,7 +107,7 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_save) {
-            mPresenter.saveFace(getIntent().getStringExtra(EXTRA_BUNDLE_URL),mIvGirlDetail);
+            mPresenter.saveFace(getIntent().getStringExtra(EXTRA_BUNDLE_URL), mIvGirlDetail);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -127,6 +128,7 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
      * Try and add a {@link Transition.TransitionListener} to the entering shared element
      * {@link Transition}. We do this so that we can load the full-size image after the transition
      * has completed.
+     *
      * @return true if we were successful in adding a listener to the enter transition
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
@@ -170,5 +172,14 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
         }
         // If we reach here then we have not added a listener
         return false;
+    }
+
+    @OnClick(R.id.iv_girl_detail)
+    public void onViewClicked() {
+        if(getSupportActionBar().isShowing()){
+            getSupportActionBar().hide();
+        }else{
+            getSupportActionBar().show();
+        }
     }
 }
