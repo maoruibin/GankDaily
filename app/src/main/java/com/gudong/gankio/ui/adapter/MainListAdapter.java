@@ -20,6 +20,7 @@
 package com.gudong.gankio.ui.adapter;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.ColorFilter;
 import android.graphics.ColorMatrix;
 import android.graphics.ColorMatrixColorFilter;
@@ -31,6 +32,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.animation.GlideAnimation;
+import com.bumptech.glide.request.target.BitmapImageViewTarget;
 import com.gudong.gankio.R;
 import com.gudong.gankio.core.GankCategory;
 import com.gudong.gankio.data.entity.Gank;
@@ -38,8 +42,6 @@ import com.gudong.gankio.ui.activity.BaseActivity;
 import com.gudong.gankio.ui.widget.RatioImageView;
 import com.gudong.gankio.util.DateUtil;
 import com.gudong.gankio.util.StringStyleUtils;
-import com.squareup.picasso.Callback;
-import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -199,16 +201,15 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         @Override
         void bindItem(Context context,final Gank gank) {
             mTvTime.setText(DateUtil.toDate(gank.publishedAt));
-            Picasso.with(context)
-                    .load(gank.url)
-                    .into(mImageView, new Callback() {
-                        @Override
-                        public void onSuccess() {
-                            mImageView.setColorFilter(mColorFilter);
-                        }
-                        @Override
-                        public void onError() {
 
+            Glide.with(context)
+                    .load(gank.url)
+                    .asBitmap()
+                    .into(new BitmapImageViewTarget(mImageView){
+                        @Override
+                        public void onResourceReady(Bitmap resource, GlideAnimation<? super Bitmap> glideAnimation) {
+                            super.onResourceReady(resource, glideAnimation);
+                            mImageView.setColorFilter(mColorFilter);
                         }
                     });
 

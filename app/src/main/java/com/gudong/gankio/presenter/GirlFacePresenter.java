@@ -28,17 +28,19 @@ import android.os.AsyncTask;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.gudong.gankio.R;
 import com.gudong.gankio.ui.view.IGirlFaceView;
 import com.gudong.gankio.util.TaskUtils;
 import com.orhanobut.logger.Logger;
-import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by GuDong on 11/2/15 18:22.
@@ -49,21 +51,31 @@ public class GirlFacePresenter extends BasePresenter<IGirlFaceView> {
         super(context, view);
     }
 
-    public void saveFace(String url) {
+    public void saveFace(final String url, final ImageView ivGirlDetail) {
         if (!TextUtils.isEmpty(url)) {
-            String fileName = url.substring(url.lastIndexOf("/")+1);
-            saveImageToSdCard(mContext, url, fileName);
+            final String fileName = url.substring(url.lastIndexOf("/")+1);
+
+            ivGirlDetail.post(new Runnable() {
+                @Override
+                public void run() {
+                    int width = ivGirlDetail.getWidth();
+                    int height = ivGirlDetail.getHeight();
+                    saveImageToSdCard(mContext, url, fileName,width,height);
+                }
+            });
         }
     }
 
-    private void saveImageToSdCard(final Context context,final  String url,final  String title) {
+    private void saveImageToSdCard(final Context context, final String url, final String title, final int w, final int h){
         TaskUtils.executeAsyncTask(new AsyncTask<Object, Object, Boolean>() {
             @Override
             protected Boolean doInBackground(Object... params) {
                 Bitmap bmp = null;
                 try {
-                    bmp = Picasso.with(context).load(url).get();
-                } catch (IOException e) {
+                    bmp = Glide.with(context).load(url).asBitmap().into(w,h).get();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                } catch (ExecutionException e) {
                     e.printStackTrace();
                 }
                 if (bmp == null) {

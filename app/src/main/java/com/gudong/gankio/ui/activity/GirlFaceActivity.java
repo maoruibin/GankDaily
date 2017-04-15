@@ -30,17 +30,15 @@ import android.support.v4.view.ViewCompat;
 import android.transition.Transition;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
+import com.github.chrisbanes.photoview.PhotoView;
 import com.gudong.gankio.R;
 import com.gudong.gankio.presenter.GirlFacePresenter;
 import com.gudong.gankio.ui.view.IGirlFaceView;
-import com.gudong.gankio.util.AndroidUtils;
 import com.gudong.gankio.util.ToastUtils;
-import com.squareup.picasso.Picasso;
 
 import butterknife.Bind;
-import uk.co.senab.photoview.PhotoViewAttacher;
 
 public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements IGirlFaceView {
 
@@ -51,10 +49,9 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     private static final String VIEW_NAME_HEADER_TITLE = "detail:header:title";
 
     @Bind(R.id.iv_girl_detail)
-    ImageView mIvGirlDetail;
+    PhotoView mIvGirlDetail;
 
     private String mUrl;
-    PhotoViewAttacher mAttacher;
 
 
     public static void gotoWatchGirlDetail(BaseActivity context,String url,String title,final View viewImage,final View viewText){
@@ -80,8 +77,6 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        mAttacher = new PhotoViewAttacher(mIvGirlDetail);
-
         mUrl = getIntent().getStringExtra(EXTRA_BUNDLE_URL);
         setTitle(getIntent().getStringExtra(EXTRA_BUNDLE_TITLE), true);
 
@@ -91,28 +86,9 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     }
 
     private void loadItem() {
-        if (AndroidUtils.isAndroidL() && addTransitionListener()) {
-            loadThumbnail();
-        } else {
-            loadFullSizeImage();
-        }
-    }
-
-    /**
-     * Load the item's thumbnail image into our {@link ImageView}.
-     */
-    private void loadThumbnail() {
-        Picasso.with(this)
+        Glide.with(this)
                 .load(mUrl)
-                .noFade()
-                .into(mIvGirlDetail);
-    }
-
-    private void loadFullSizeImage() {
-        Picasso.with(this)
-                .load(mUrl)
-                .noFade()
-                .noPlaceholder()
+                .crossFade()
                 .into(mIvGirlDetail);
     }
 
@@ -130,7 +106,7 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
         if (id == R.id.action_save) {
-            mPresenter.saveFace(getIntent().getStringExtra(EXTRA_BUNDLE_URL));
+            mPresenter.saveFace(getIntent().getStringExtra(EXTRA_BUNDLE_URL),mIvGirlDetail);
             return true;
         }
         return super.onOptionsItemSelected(item);
@@ -145,12 +121,6 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
     @Override
     public void showFailInfo(String error) {
         ToastUtils.showShort(error);
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        Picasso.with(this).cancelRequest(mIvGirlDetail);
     }
 
     /**
@@ -169,7 +139,7 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
                 @Override
                 public void onTransitionEnd(Transition transition) {
                     // As the transition has ended, we can now load the full-size image
-                    loadFullSizeImage();
+                    loadItem();
 
                     // Make sure we remove ourselves as a listener
                     transition.removeListener(this);
