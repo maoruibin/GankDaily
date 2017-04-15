@@ -64,9 +64,7 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
 
         ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                 context,new Pair<View, String>(viewImage,
-                        VIEW_NAME_HEADER_IMAGE),
-                new Pair<View, String>(viewText,
-                        VIEW_NAME_HEADER_TITLE));
+                        VIEW_NAME_HEADER_IMAGE));
 
         ActivityCompat.startActivity(context, intent, activityOptions.toBundle());
     }
@@ -88,7 +86,6 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
         setTitle(getIntent().getStringExtra(EXTRA_BUNDLE_TITLE), true);
 
         ViewCompat.setTransitionName(mIvGirlDetail, VIEW_NAME_HEADER_IMAGE);
-        ViewCompat.setTransitionName(AndroidUtils.getTitleViewInToolbar(mToolbar), VIEW_NAME_HEADER_TITLE);
 
         loadItem();
     }
