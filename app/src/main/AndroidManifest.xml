@@ -53,6 +53,8 @@
             android:name=".ui.activity.WebActivity"
             android:label="@string/title_activity_web" >
         </activity>
+        <activity android:name=".ui.activity.AboutActivity"
+                  android:theme="@style/AppTheme.MaterialAboutActivity"/>
     </application>
 
 </manifest>

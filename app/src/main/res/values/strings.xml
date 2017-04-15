@@ -33,4 +33,24 @@
     <string name="action_view_list">纯&#160;&#8226;&#160;妹子</string>
     <string name="unknow">未知</string>
     <string name="change_log">更新日志</string>
+    <string name="version">Version</string>
+    <string name="rate_app">Rate this app</string>
+    <string name="report_issue">Report an issue</string>
+    <string name="report_issue_here">Having ab issue? Report it here</string>
+    <string name="author">Author</string>
+    <string name="fork_github">Fork on Github</string>
+    <string name="send_email">Send an email</string>
+    <string name="contact">Social</string>
+    <string name="twitter">Twitter</string>
+    <string name="website">Website</string>
+    <string name="email_address">gudong.name@gmail.com</string>
+    <string name="question_concerning_fasthub">给 GankDaily 的反馈</string>
+    <string name="google_plus">Google+</string>
+    <string name="weibo">Weibo</string>
+    <string name="zhihu">Zhihu</string>
+    <string name="jianshu">Jianshu</string>
+    <string name="github">Github</string>
+    <string name="website_sub">咕咚</string>
+    <string name="weibo_nick">大侠咕咚</string>
+    <string name="github_id">maoruibin</string>
 </resources>

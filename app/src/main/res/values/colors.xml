@@ -2,6 +2,7 @@
 <resources>
     <color name="md_black_1000">#000000</color>
     <color name="md_white_1000">#ffffff</color>
+    <color name="icon_color">#212121</color>
 
     <color name="colorPrimary">#8f4b2e</color>
     <color name="colorAccent">#df5115</color>
