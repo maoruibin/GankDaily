@@ -79,9 +79,8 @@ public class GirlFaceActivity extends BaseActivity<GirlFacePresenter> implements
         super.onCreate(savedInstanceState);
 
         mUrl = getIntent().getStringExtra(EXTRA_BUNDLE_URL);
-        setTitle(getIntent().getStringExtra(EXTRA_BUNDLE_TITLE), true);
+        setTitle("", true);
         ViewCompat.setTransitionName(mIvGirlDetail, VIEW_NAME_HEADER_IMAGE);
-
         loadItem();
     }
 
