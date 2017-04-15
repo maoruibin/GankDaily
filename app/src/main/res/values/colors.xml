@@ -4,7 +4,7 @@
     <color name="md_white_1000">#ffffff</color>
     <color name="icon_color">#212121</color>
 
-    <color name="colorPrimary">#8f4b2e</color>
-    <color name="colorAccent">#df5115</color>
-    <color name="colorPrimaryDark">#5c311f</color>
+    <color name="colorPrimary">#130c0e</color>
+    <color name="colorAccent">#130c0e</color>
+    <color name="colorPrimaryDark">#130c0e</color>
 </resources>
