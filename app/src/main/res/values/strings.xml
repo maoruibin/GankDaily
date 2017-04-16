@@ -10,6 +10,7 @@
     <string name="title_activity_view_list">妹子们</string>
     <string name="title_activity_web">WebActivity</string>
     <string name="action_refresh">刷新</string>
+    <string name="action_share_url">分享</string>
     <string name="action_copy_url">复制链接</string>
     <string name="action_open_url">从浏览器打开链接</string>
     <string name="toast_copy_done">复制成功</string>

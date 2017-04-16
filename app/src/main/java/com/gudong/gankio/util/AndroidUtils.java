@@ -22,6 +22,7 @@ package com.gudong.gankio.util;
 import android.content.ClipData;
 import android.content.ClipboardManager;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.res.Resources;
@@ -116,4 +117,11 @@ public class AndroidUtils {
         sp.edit().putString(key, value).apply();
     }
 
+    public static void shareText(Context context, String text){
+        Intent sendIntent = new Intent();
+        sendIntent.setAction(Intent.ACTION_SEND);
+        sendIntent.putExtra(Intent.EXTRA_TEXT,text);
+        sendIntent.setType("text/plain");
+        context.startActivity(Intent.createChooser(sendIntent, "发送"));
+    }
 }

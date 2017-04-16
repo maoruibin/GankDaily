@@ -97,6 +97,9 @@ public class WebActivity extends BaseSwipeRefreshActivity<WebPresenter> implemen
                 String copyDone = getString(R.string.toast_copy_done);
                 AndroidUtils.copyToClipBoard(this, mWbContent.getUrl(), copyDone);
                 return true;
+            case R.id.action_share_url:
+                AndroidUtils.shareText(this, mWbContent.getUrl());
+                return true;
             case R.id.action_open_url:
                 Intent intent = new Intent();
                 intent.setAction(Intent.ACTION_VIEW);
