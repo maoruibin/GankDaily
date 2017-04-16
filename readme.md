@@ -1,11 +1,14 @@
 # GankDaily
 ![icon](/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png "")
+
 每日提供技术干货的 App
 
 ## 下载
+[fir](http://fir.im/gankdaily) 
+
+[酷安](http://www.coolapk.com/apk/com.gudong.gankio) 
+
 <a href="https://play.google.com/store/apps/details?id=com.gudong.gankio" target="_blank"><img src="http://www.android.com/images/brand/get_it_on_play_logo_large.png"/></a>
-<br>
-[fir下载](http://fir.im/gankdaily)<br>
 
 ## 干货数据源
 应用中的所有干货数据均来自[干货集中营](http://gank.io/)。
