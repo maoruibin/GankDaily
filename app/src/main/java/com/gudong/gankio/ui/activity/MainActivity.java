@@ -120,7 +120,6 @@ public class MainActivity extends BaseSwipeRefreshActivity<MainPresenter> implem
                 WebActivity.gotoWebActivity(this,url,title);
                 break;
             case R.id.action_about:
-                //DialogUtil.showCustomDialog(this, getSupportFragmentManager(), getString(R.string.action_about), "about_gank_app.html", "about");
                 AboutActivity.gotoAboutActivity(this);
                 break;
             case R.id.action_opinion:

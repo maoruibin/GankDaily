@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.view.MenuItem;
 
@@ -21,11 +22,16 @@ public class AboutActivity extends MaterialAboutActivity {
     public static void gotoAboutActivity(Context context){
         context.startActivity(new Intent(context,AboutActivity.class));
     }
-    @Override protected MaterialAboutList getMaterialAboutList(Context context) {
+    @Override @NonNull protected MaterialAboutList getMaterialAboutList(@NonNull Context context) {
         MaterialAboutCard.Builder appCardBuilder = new MaterialAboutCard.Builder();
         try {
-            appCardBuilder.addItem(ConvenienceBuilder.createVersionActionItem(context, ContextCompat.getDrawable(context, R.drawable.ic_issues),
-                    getString(R.string.version), false));
+            appCardBuilder.addItem(
+                    ConvenienceBuilder.createVersionActionItem(
+                            context,
+                            ContextCompat.getDrawable(context, R.drawable.ic_issues),
+                            getString(R.string.version),
+                            false)
+            );
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
