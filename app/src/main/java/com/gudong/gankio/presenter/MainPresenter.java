@@ -172,7 +172,7 @@ public class MainPresenter extends BasePresenter<IMainView> {
                             //record count of empty day
                             mCountOfGetMoreDataEmpty += 1;
                             //if empty day is more than five,it indicate has no more data to show
-                            if(mCountOfGetMoreDataEmpty>=5){
+                            if(mCountOfGetMoreDataEmpty>=10){
                                 mView.hasNoMoreData();
                             }else{
                                 // we need look forward data

@@ -23,7 +23,7 @@ import android.app.Activity;
 
 import com.gudong.gankio.data.PrettyGirlData;
 import com.gudong.gankio.data.entity.Girl;
-import com.gudong.gankio.data.休息视频Data;
+import com.gudong.gankio.data.RestData;
 import com.gudong.gankio.ui.view.IViewListView;
 
 import java.util.List;
@@ -72,10 +72,10 @@ public class ViewListPresenter extends BasePresenter<IViewListView>{
         Observable.zip(
                 mGuDong.getPrettyGirlData(PAGE_SIZE, mCurrentPage),
                 mGuDong.get休息视频Data(PAGE_SIZE, mCurrentPage),
-                new Func2<PrettyGirlData, 休息视频Data, PrettyGirlData>() {
+                new Func2<PrettyGirlData, RestData, PrettyGirlData>() {
                     @Override
-                    public PrettyGirlData call(PrettyGirlData prettyGirlData, 休息视频Data 休息视频Data) {
-                        return createGirlInfoWith休息视频(prettyGirlData,休息视频Data);
+                    public PrettyGirlData call(PrettyGirlData prettyGirlData, RestData RestData) {
+                        return createGirlInfoWith休息视频(prettyGirlData, RestData);
                     }
                 })
                 .map(new Func1<PrettyGirlData, List<Girl>>() {
@@ -129,10 +129,10 @@ public class ViewListPresenter extends BasePresenter<IViewListView>{
         Observable.zip(
                 mGuDong.getPrettyGirlData(PAGE_SIZE,mCurrentPage),
                 mGuDong.get休息视频Data(PAGE_SIZE,mCurrentPage),
-                new Func2<PrettyGirlData, 休息视频Data, PrettyGirlData>() {
+                new Func2<PrettyGirlData, RestData, PrettyGirlData>() {
                     @Override
-                    public PrettyGirlData call(PrettyGirlData prettyGirlData, 休息视频Data 休息视频Data) {
-                        return createGirlInfoWith休息视频(prettyGirlData,休息视频Data);
+                    public PrettyGirlData call(PrettyGirlData prettyGirlData, RestData RestData) {
+                        return createGirlInfoWith休息视频(prettyGirlData, RestData);
                     }
                 })
                 .map(new Func1<PrettyGirlData, List<Girl>>() {
@@ -182,7 +182,7 @@ public class ViewListPresenter extends BasePresenter<IViewListView>{
                 });
     }
 
-    private PrettyGirlData createGirlInfoWith休息视频(PrettyGirlData girlData,休息视频Data data){
+    private PrettyGirlData createGirlInfoWith休息视频(PrettyGirlData girlData,RestData data){
         int restSize = data.results.size();
         for (int i = 0; i < girlData.results.size(); i++) {
             if(i<=restSize-1){

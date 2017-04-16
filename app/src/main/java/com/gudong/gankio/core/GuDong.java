@@ -21,7 +21,7 @@ package com.gudong.gankio.core;
 
 import com.gudong.gankio.data.GankData;
 import com.gudong.gankio.data.PrettyGirlData;
-import com.gudong.gankio.data.休息视频Data;
+import com.gudong.gankio.data.RestData;
 
 import retrofit.http.GET;
 import retrofit.http.Path;
@@ -37,7 +37,7 @@ public interface GuDong {
     Observable<PrettyGirlData> getPrettyGirlData(@Path("pagesize") int pagesize,@Path("page") int page);
 
     @GET("/data/休息视频/{pagesize}/{page}")
-    Observable<休息视频Data> get休息视频Data(@Path("pagesize") int pagesize,@Path("page")int page);
+    Observable<RestData> get休息视频Data(@Path("pagesize") int pagesize, @Path("page")int page);
 
     @GET("/day/{year}/{month}/{day}")
     Observable<GankData> getGankData(@Path("year")int year,@Path("month")int month,@Path("day")int day);
