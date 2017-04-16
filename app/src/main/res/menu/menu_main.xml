@@ -12,7 +12,7 @@
     <item android:id="@+id/action_github_tending"
           android:title="@string/action_github_tending"
           android:orderInCategory="100"
-          android:visible="true"
+          android:visible="false"
           app:showAsAction="never"/>
 
       <item android:id="@+id/action_about"

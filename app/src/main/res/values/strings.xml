@@ -24,7 +24,7 @@
 
     <string name="action_github_trending">GitHub Trending</string>
     <string name="action_github_issue">Opinion</string>
-    <string name="url_github_trending">https://github.com/trending</string>
+    <string name="url_github_trending">https://github.com/trending/java</string>
     <string name="url_github_issue">https://github.com/maoruibin/GankDaily/issues</string>
 
     <string name="title_point">提示</string>
