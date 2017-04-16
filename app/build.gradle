@@ -62,8 +62,8 @@ android {
         xiaomi {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE:"xiaomi"]
         }
-        m360 {
-            manifestPlaceholders = [UMENG_CHANNEL_VALUE:"m360"]
+        coolapk {
+            manifestPlaceholders = [UMENG_CHANNEL_VALUE:"coolapk"]
         }
         wandoujia {
             manifestPlaceholders = [UMENG_CHANNEL_VALUE: "wandoujia"]
