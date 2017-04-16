@@ -131,7 +131,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(final MainListAdapter.ViewHolderItem holder, int position) {
-        holder.bindItem(mContext, mGankList.get(position));
+        holder.bindItem(mContext, mGankList.get(position),position);
     }
 
     @Override
@@ -146,7 +146,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         public ViewHolderItem(View itemView) {
             super(itemView);
         }
-        abstract void bindItem(Context context,Gank gank);
+        abstract void bindItem(Context context, Gank gank, int position);
     }
 
     static class ViewHolderItemNormal extends ViewHolderItem {
@@ -160,7 +160,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
             ButterKnife.bind(this, itemView);
         }
 
-        public void bindItem(final Context context,final Gank gank){
+        public void bindItem(final Context context, final Gank gank, int position){
             mTvTitle.setText(StringStyleUtils.getGankInfoSequence(context, gank));
             mRlGankParent.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -181,7 +181,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         }
 
        @Override
-       void bindItem(Context context,Gank gank) {
+       void bindItem(Context context, Gank gank, int position) {
            mTvCategory.setText(gank.type);
        }
    }
@@ -201,7 +201,7 @@ public class MainListAdapter extends RecyclerView.Adapter<MainListAdapter.ViewHo
         }
 
         @Override
-        void bindItem(Context context,final Gank gank) {
+        void bindItem(Context context, final Gank gank, final int position) {
             mTvTime.setText(DateUtil.toDate(gank.publishedAt));
 
             Glide.with(context)

@@ -28,6 +28,8 @@
             android:background="@color/bk_time"
             android:layout_gravity="bottom"
             android:gravity="right"
+            android:visibility="gone"
+            tools:visibility="gone"
             android:padding="@dimen/dp_10">
             <TextView
                 android:id="@+id/tv_time"
