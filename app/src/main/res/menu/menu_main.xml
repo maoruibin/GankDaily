@@ -6,7 +6,8 @@
     <item android:id="@+id/action_view_list"
           android:title="@string/action_view_list"
           android:orderInCategory="100"
-          app:showAsAction="never"/>
+          app:showAsAction="never"
+        android:visible="false"/>
 
     <item android:id="@+id/action_github_tending"
           android:title="@string/action_github_tending"
